@@ -1,3 +1,15 @@
-#map-canvas {
-  /*height: 100%;*/
+.map-canvas,
+.map-canvas *,
+.map-canvas *:before,
+.map-canvas *:after {
+  -webkit-box-sizing: content-box;
+   -moz-box-sizing: content-box;
+        box-sizing: content-box;
 }
+
+.map-canvas img {
+  max-width: 100%;
+  display: inline;
+}
+
+img, object, embed { max-width: 100%; }

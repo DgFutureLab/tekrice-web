@@ -4,7 +4,6 @@
     <link rel="stylesheet" type="text/css" href="/bootstrap.min.css" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/dashboard.css" />
-    <link rel="stylesheet" type="text/css" href="/map.css" />
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzC24a6Dcov2UFSFhJyr0PYxqQV0LUOdY"></script>
     <script type="text/javascript">
@@ -17,7 +16,9 @@
             mapOptions);
       }
       google.maps.event.addDomListener(window, 'load', initialize);
+      console.log("TEST");
     </script>
+    <link rel="stylesheet" type="text/css" href="/map.css" />
   </head>
   <body>
     <%= partial(:topbar_template) %>
@@ -32,7 +33,7 @@
         </div>
         <div class="col-md-9">
           <h1>Node detail | <%= id %></h1>
-          <div id="map-canvas" />
+          <div class="map-canvas"></div>
         </div>
       </div>
     </div>
