@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/dashboard.css" />
+  </head>
+
+  <body>
+    <%= partial(:topbar_template) %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="list-group">
+            <a class="list-group-item" href="/dashboard">Home</a>
+            <a class="list-group-item" href="/dashboard/nodes">Nodes</a>
+            <a class="list-group-item active" href="/dashboard/settings">Settings</a>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <h1>個人設定</h1>
+          <div class="text-center">
+            <img src="/business64.png" class="img-thumbnail"/>
+          </div>
+          <br />
+          <div class="panel panel-default">
+            <div class="panel-heading">ユーザ名</div>
+            <div class="panel-body">
+              ライス太郎
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">メール</div>
+            <div class="panel-body">
+              futurelabdg@gmail.com
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">住所</div>
+            <div class="panel-body">
+              〒150-0022 東京都渋谷区恵比寿南3-5-7代官山DGビル(デジタルゲートビル)
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">電話番号</div>
+            <div class="panel-body">
+              03-6367-1111
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -15,6 +15,10 @@ get '/dashboard/nodes' do
   erb :nodes
 end
 
+get '/dashboard/nodes/:uuid' do
+  erb :nodedetail, locals:{ id:params[:uuid] }
+end
+
 get '/dashboard/settings' do
   erb :settings
 end
@@ -31,4 +35,10 @@ end
 
 get '/googlemap' do
   erb :googlemap
+end
+
+helpers do
+  def partial template
+    erb template, layout:false
+  end
 end
