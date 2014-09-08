@@ -23,18 +23,18 @@ get '/dashboard/settings' do
   erb :settings
 end
 
-get '/test.json' do
+get '/dashboard/map' do
+  erb :googlemap
+end
+
+get '/test/test.json' do
   data = { :location => "here", :data => "test data" }
   response_data = data.to_json
 end
 
-get '/mapbox' do
+get '/test/mapbox' do
   test = "jojojojo"
   erb :mapbox, locals:{foo: test}
-end
-
-get '/googlemap' do
-  erb :googlemap
 end
 
 helpers do

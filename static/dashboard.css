@@ -1,2 +1,10 @@
 #top-banner {
 }
+
+table#node-list {
+  color: #000;
+}
+
+table#node-list > tbody > tr > td > a {
+  color: #000;
+}
