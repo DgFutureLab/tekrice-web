@@ -1,10 +1,10 @@
 function initialize() {
   // Set position
-  var latLng = new google.maps.LatLng(35.143816, 139.9882407);
+  var latLng1 = new google.maps.LatLng(35.143816, 139.9882407);
 
   // Map options
   var mapOptions = {
-    center: latLng,
+    center: latLng1,
     zoom: 22,
     mapTypeId: google.maps.MapTypeId.SATELLITE
   };
@@ -15,22 +15,20 @@ function initialize() {
   // Marker settings
   var image1 = '/antena-green.png';
   var marker1 = new google.maps.Marker({
-    position: latLng,
+    position: latLng1,
     map: map,
     icon: image1
   });
   marker1.setMap(map);
 
-  /*
   var image2 = '/antena-red.png';
-  var latLng_red = new google.maps.LatLng(35.00, 139.00);
+  var latLng2 = new google.maps.LatLng(35.1438, 139.9884);
   var marker2 = new google.maps.Marker({
-    position: latLng_red,
+    position: latLng2,
     map: map,
     icon: image2
   });
   marker2.setMap(map);
-  */
 
   // Pop-up info
   var contentString = '<div id="content">' + '<a href="/dashboard"><h1>xxxxxxx01_uuid</h1></a>' + '<div id="bodyContent">' + '</div>';
@@ -38,6 +36,9 @@ function initialize() {
 
   google.maps.event.addListener(marker1, 'click', function() {
     infowindow.open(map, marker1);
+  });
+  google.maps.event.addListener(marker2, 'click', function() {
+    infowindow.open(map, marker2);
   });
 }
 
