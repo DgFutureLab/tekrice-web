@@ -1,50 +1,3 @@
-var data1 = [4,8,15,16,23,42];
-
-var width1 = 420, 
-    barHeight1 = 20;
-
-var x1 = d3.scale.linear()
-  .domain([0, d3.max(data1)])
-  .range([0, width1]);
-
-var chart1 = d3.select(".temp")
-  .attr("width", width1)
-  .attr("height", barHeight1 * data1.length);
-
-var bar1 = chart1.selectAll("g")
-  .data(data1)
-  .enter().append("g")
-  .attr("transform", function(d,i) { return "translate(0," + i*barHeight1 + ")"; });
-
-bar1.append("rect")
-  .attr("width", x1)
-  .attr("height", barHeight1 - 1);
-
-bar1.append("text")
-  .attr("x", function(d) { return x1(d) - 3; })
-  .attr("y", barHeight1 / 2)
-  .attr("dy", ".35em")
-  .text(function(d) { return d; });
-
-//////
-
-var test = {"my":"json"};
-
-var width_m = 420;
-
-var svg_moisture = d3.select(".moisture")
-  .data(window.data)
-  .attr("width", 420)
-  .attr("height", 200);
-
-var line_moisture = d3.svg.line().x
-
-svg_moisture.append("g")
-  .attr("class", "x axis")
-  .attr("transform", "translate(" + );
-
-//////
-
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width  = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -95,4 +48,11 @@ d3.tsv("/data.tsv", function(error, data) {
 function type(d) {
   d.frequency = +d.frequency;
   return d;
+}
+
+var rice_pic = $("#rice_pic");
+if (window.data["dist"] > 55.0) {
+  rice_pic.attr("src", "/sadrice.jpg")
+} else {
+  rice_pic.attr("src", "/happyrice.jpg")
 }

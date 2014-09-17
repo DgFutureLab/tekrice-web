@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta http-equiv="Refresh" content="5">
     <link rel="stylesheet" type="text/css" href="/bootstrap.min.css" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="/node.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   </head>
   <body>
     <%= partial(:topbar_template) %>
@@ -17,36 +19,45 @@
       </div>
 
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-12" style="height:572px;">
+                  <h2 id="temp"><img src="/temp.png" />&nbsp;<%= temp %> &deg;C</h2>
+                  <h2 id="humid"><img src="/water.png" />&nbsp;<%= humid %> %</h2>
+                  <h2 id="wind"><img src="/wind.png" />&nbsp;2 m/s</h2>
+                  <img id="rice_pic" src="/sadrice.jpg" />
+                  <h2 id="height"><%= dist %> cm</h2>
+                  <img id="height_pic" src="/height.png" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">水位データ</h3>
             </div>
             <div class="panel-body">
               <svg class="distance"></svg>
-              <img src="/water.png" /><%= dist %>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">温度データ</h3>
             </div>
             <div class="panel-body">
               <svg class="temp"></svg>
-              <img src="/water.png" /><%= temp %>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">湿度データ</h3>
             </div>
             <div class="panel-body">
               <svg class="moisture"></svg>
-              <img src="/height.png" /><%= humid %>
             </div>
           </div>
         </div>
@@ -58,6 +69,9 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      window.data = {"dist":<%= dist %> ,"humid":<%= humid %> ,"temp":<%= temp %>};
+    </script>
     dist:<%= dist %>
     humid:<%= humid %>
     temp:<%= temp %>

@@ -36,3 +36,45 @@
   stroke: steelblue;
   stroke-width: 1.5px;
 }
+
+#temp {
+  position: absolute;
+  left: 60px;
+  z-index: 1;
+}
+
+#humid {
+  position: absolute;
+  left: 40px;
+  top: 180px;
+  z-index: 1;
+}
+
+#wind {
+  position: absolute;
+  left: 50px;
+  top: 90px;
+  z-index: 1;
+}
+
+#height {
+  position: absolute;
+  left: 50px;
+  bottom: 120px;
+  z-index: 1;
+}
+
+#height_pic {
+  position: absolute;
+  left: 30px;
+  bottom: 15px;
+  z-index: 1;
+}
+
+#rice_pic {
+  height: 570px;
+  position: absolute;
+  left: 25%;
+  top: 0px;
+  z-index: 0;
+}
