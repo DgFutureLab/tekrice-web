@@ -23,10 +23,10 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-12" style="height:572px;">
-                  <h2 id="temp"><img src="/water.png" />&nbsp;<%= data[0]["sensors"][2]["number of readings"] %> &deg;C</h2>
-                  <h2 id="wind"><img src="/wind.png" />&nbsp;<%= data[0]["sensors"][0]["number of readings"] %> m/s</h2>
+                  <h2 id="temp"><img src="/water.png" />&nbsp;<%= data[1]["sensors"][2]["number of readings"] %> &deg;C</h2>
+                  <h2 id="wind"><img src="/wind.png" />&nbsp;<%= data[1]["sensors"][0]["number of readings"] %> m/s</h2>
                   <img id="rice_pic" src="/happyrice.jpg" />
-                  <h2 id="height"><%= data[0]["sensors"][1]["number of readings"] %> cm</h2>
+                  <h2 id="height"><%= data[1]["sensors"][1]["number of readings"] %> cm</h2>
                   <img id="height_pic" src="/height.png" />
                 </div>
               </div>
@@ -45,7 +45,7 @@
                   <strong>水位</strong>
                 </div>
                 <div class="col-md-3">
-                  <%= data[0]["sensors"][1]["number of readings"] %> cm
+                  <%= data[1]["sensors"][1]["number of readings"] %> cm
                 </div>
                 <div class="col-md-3">
                   (- 1.5 cm)
@@ -59,7 +59,7 @@
                   <strong>温度</strong>
                 </div>
                 <div class="col-md-3">
-                  <%= data[0]["sensors"][2]["number of readings"] %> &deg;C
+                  <%= data[1]["sensors"][2]["number of readings"] %> &deg;C
                 </div>
                 <div class="col-md-3">
                   (+ 0.5 &deg;C)
@@ -87,7 +87,7 @@
                   <strong>風速</strong>
                 </div>
                 <div class="col-md-3">
-                  <%= data[0]["sensors"][0]["number of readings"] %> m/s
+                  <%= data[1]["sensors"][0]["number of readings"] %> m/s
                 </div>
                 <div class="col-md-3">
                   (N/A)
@@ -109,7 +109,7 @@
                   <strong>温度</strong>
                 </div>
                 <div class="col-md-3">
-                  <%= data[0]["sensors"][2]["number of readings"] + 12 %> &deg;C
+                  <%= data[1]["sensors"][2]["number of readings"] + 12 %> &deg;C
                 </div>
                 <div class="col-md-3">
                   (- 0.7 &deg;C)
@@ -186,7 +186,7 @@
               <tr>
                 <td><%= d["id"] %></td>
                 <td><a href="/dashboard/nodes/<%= d["id"] %>"><%= d["alias"] %></a></td>
-                <td><a href="/dashboard/nodes/<%= d["id"] %>">xxxxxxx01_uuid</a></td>
+                <td><a href="/dashboard/nodes/<%= d["id"] %>">xxxxxxx0<%= d["id"] %>_uuid</a></td>
                 <td><a href="/dashboard/map"><i class="fa fa-map-marker"></i> Go to map</a></td>
                 <td><span class="label label-success"><i class="fa fa-check"></i> Online</span></td>
               </tr>
