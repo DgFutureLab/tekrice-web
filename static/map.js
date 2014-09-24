@@ -1,5 +1,9 @@
 function initialize() {
 
+  var lat1 = window.data[0]["latitude"];
+  var lng1 = window.data[0]["longitude"];
+  var latLng1 = new google.maps.LatLng( lat1, lng1 );
+
   // Map options
   var mapOptions = {
     center: latLng1,
@@ -7,38 +11,31 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.SATELLITE
   };
 
-  // Initialize map
-  var map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions );
-
-  // Marker settings
-  var image1 = '/antena-green.png';
-  var latLng1 = new google.maps.LatLng(window.data[0]["latitude"], window.data[0]["longitude"]);
-  var marker1 = new google.maps.Marker({
-    position: latLng1,
-    map: map,
-    icon: image1
-  });
-  marker1.setMap(map);
-
-  var image2 = '/antena-red.png';
-  var latLng2 = new google.maps.LatLng(35.1438, 139.9884);
-  var marker2 = new google.maps.Marker({
-    position: latLng2,
-    map: map,
-    icon: image2
-  });
-  marker2.setMap(map);
-
   // Pop-up info
   var contentString = '<div id="content">' + '<a href="/dashboard"><h1>xxxxxxx01_uuid</h1></a>' + '<div id="bodyContent">' + '</div>';
   var infowindow = new google.maps.InfoWindow({ content: contentString });
 
-  google.maps.event.addListener(marker1, 'click', function() {
-    infowindow.open(map, marker1);
-  });
-  google.maps.event.addListener(marker2, 'click', function() {
-    infowindow.open(map, marker2);
-  });
-}
+  // Initialize map
+  var map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions );
 
+  for (var i = 0; i < window.data.length; i++) {
+    var image;
+    if (window.data[i]["status"] == "ok") {
+      image = '/antena-green.png';
+    } else {
+      image = '/antena-red.png';
+    }
+
+    var position = new google.maps.LatLng( window.data[i]["latitude"], window.data[i]["longitude"] );
+    var marker   = new google.maps.Marker({
+      position: position,
+      map: map,
+      icon: image
+    });
+    marker.setMap(map);
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+}
 google.maps.event.addDomListener( window, 'load', initialize );
