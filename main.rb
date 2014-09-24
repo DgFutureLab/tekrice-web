@@ -87,7 +87,13 @@ get '/dashboard/settings' do
 end
 
 get '/dashboard/map' do
-  erb :googlemap
+  data = [
+    { latitude:35.143951, longitude:139.988560, status:"ok" },
+    { latitude:35.143945, longitude:139.988236, status:"ok" },
+    { latitude:35.144150, longitude:139.988486, status:"disabled" },
+    { latitude:35.144115, longitude:139.988134, status:"disabled" }
+  ]
+  erb :map, locals:{ data:data.to_json }
 end
 
 get '/test/test.json' do

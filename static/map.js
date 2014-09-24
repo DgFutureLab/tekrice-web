@@ -1,6 +1,4 @@
 function initialize() {
-  // Set position
-  var latLng1 = new google.maps.LatLng(35.143816, 139.9882407);
 
   // Map options
   var mapOptions = {
@@ -14,6 +12,7 @@ function initialize() {
 
   // Marker settings
   var image1 = '/antena-green.png';
+  var latLng1 = new google.maps.LatLng(window.data[0]["latitude"], window.data[0]["longitude"]);
   var marker1 = new google.maps.Marker({
     position: latLng1,
     map: map,
