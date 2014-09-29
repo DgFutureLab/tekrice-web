@@ -14,10 +14,19 @@ function initialize() {
   // Initialize map
   var map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions );
 
+  var contentString = new Array(window.data.length);
+  var positionArray = new Array(window.data.length);
+  var markerArray   = new Array(window.data.length);
+
   for (var i = 0; i < window.data.length; i++) {
     // Pop-up info
-    var contentString = '<div id="content">' + '<a href="/dashboard/nodes/2"><h1>uuid_02</h1></a>' + '<div id="bodyContent">' + '</div>';
-    var infowindow = new google.maps.InfoWindow({ content: contentString });
+    contentString[i] = '<div class="content">' 
+      + '<a href="/dashboard/nodes/2"><h1>uuid_02</h1></a>' 
+      + '<div class="bodyContent">'
+      + i.toString()
+      + '</div>' 
+      + '</div>';
+    var infowindow = new google.maps.InfoWindow({ content: contentString[i] });
 
     var image;
     if (window.data[i]["status"] == "ok") {
@@ -26,16 +35,29 @@ function initialize() {
       image = '/antena-red.png';
     }
 
-    var position = new google.maps.LatLng( window.data[i]["latitude"], window.data[i]["longitude"] );
-    var marker   = new google.maps.Marker({
-      position: position,
+    positionArray[i] = new google.maps.LatLng( window.data[i]["latitude"], window.data[i]["longitude"] );
+    markerArray[i] = new google.maps.Marker({
+      position: positionArray[i],
       map: map,
       icon: image
     });
-    marker.setMap(map);
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map, marker);
-    });
+    markerArray[i].setMap(map);
   }
+
+  console.log(contentString);
+
+  google.maps.event.addListener(markerArray[0], 'click', function() {
+    infowindow.open(map, markerArray[0]);
+  });
+  google.maps.event.addListener(markerArray[1], 'click', function() {
+    infowindow.open(map, markerArray[1]);
+  });
+  google.maps.event.addListener(markerArray[2], 'click', function() {
+    infowindow.open(map, markerArray[2]);
+  });
+  google.maps.event.addListener(markerArray[3], 'click', function() {
+    infowindow.open(map, markerArray[3]);
+  });
+
 }
 google.maps.event.addDomListener( window, 'load', initialize );
