@@ -11,14 +11,14 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.SATELLITE
   };
 
-  // Pop-up info
-  var contentString = '<div id="content">' + '<a href="/dashboard"><h1>xxxxxxx01_uuid</h1></a>' + '<div id="bodyContent">' + '</div>';
-  var infowindow = new google.maps.InfoWindow({ content: contentString });
-
   // Initialize map
   var map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions );
 
   for (var i = 0; i < window.data.length; i++) {
+    // Pop-up info
+    var contentString = '<div id="content">' + '<a href="/dashboard/nodes/2"><h1>uuid_02</h1></a>' + '<div id="bodyContent">' + '</div>';
+    var infowindow = new google.maps.InfoWindow({ content: contentString });
+
     var image;
     if (window.data[i]["status"] == "ok") {
       image = '/antena-green.png';
