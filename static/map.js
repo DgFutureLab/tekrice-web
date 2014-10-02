@@ -19,6 +19,7 @@ function initialize() {
   var markerArray   = new Array(window.data.length);
 
   for (var i = 0; i < window.data.length; i++) {
+    console.log(i.toString());
     // Pop-up info
     contentString[i] = '<div class="content">' 
       + '<a href="/dashboard/nodes/2"><h1>uuid_02</h1></a>' 
@@ -26,7 +27,6 @@ function initialize() {
       + i.toString()
       + '</div>' 
       + '</div>';
-    var infowindow = new google.maps.InfoWindow({ content: contentString[i] });
 
     var image;
     if (window.data[i]["status"] == "ok") {
@@ -44,18 +44,21 @@ function initialize() {
     markerArray[i].setMap(map);
   }
 
-  console.log(contentString);
-
+  // Needs refactoring into loop, but not possible for some reason
   google.maps.event.addListener(markerArray[0], 'click', function() {
+    var infowindow = new google.maps.InfoWindow({ content: contentString[0] });
     infowindow.open(map, markerArray[0]);
   });
   google.maps.event.addListener(markerArray[1], 'click', function() {
+    var infowindow = new google.maps.InfoWindow({ content: contentString[1] });
     infowindow.open(map, markerArray[1]);
   });
   google.maps.event.addListener(markerArray[2], 'click', function() {
+    var infowindow = new google.maps.InfoWindow({ content: contentString[2] });
     infowindow.open(map, markerArray[2]);
   });
   google.maps.event.addListener(markerArray[3], 'click', function() {
+    var infowindow = new google.maps.InfoWindow({ content: contentString[3] });
     infowindow.open(map, markerArray[3]);
   });
 
