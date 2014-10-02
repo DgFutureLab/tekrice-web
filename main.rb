@@ -38,6 +38,15 @@ get '/dashboard' do
     @temp = no_data
   end
 
+  # Testing the new API server responses
+  test = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
+  if test.code == "200"
+    test_result = JSON.parse(test.body)
+    p test_result
+  end
+
+  test2 = Net::HTTP.get_response(URI.parse("http://128.199.191.249/reading/node_XX/distance&date_range=1week"))
+
   erb :dashboard, locals:{ dist:@dist["data"][0]["value"], humid:@humid["data"][0]["value"], temp:@temp["data"][0]["value"] }
 end
 
