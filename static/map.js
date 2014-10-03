@@ -21,11 +21,11 @@ function initialize() {
   for (var i = 0; i < window.data.length; i++) {
     console.log(i.toString());
     // Pop-up info
-    contentString[i] = '<div class="content">' 
-      + '<a href="/dashboard/nodes/2"><h1>uuid_02</h1></a>' 
+    contentString[i] = '<div class="content">'
+      + '<a href="/dashboard/nodes/2"><h1>uuid_02</h1></a>'
       + '<div class="bodyContent">'
       + i.toString()
-      + '</div>' 
+      + '</div>'
       + '</div>';
 
     var image;

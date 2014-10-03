@@ -14,10 +14,17 @@ get '/dashboard' do
   humid_api_url = "http://128.199.191.249/reading/node_2/humidity"
   temp_api_url  = "http://128.199.191.249/reading/node_2/temperature"
 
+  # Testing the new API server responses
+  all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
+  if all_data_call.code == "200"
+    @all_data = JSON.parse(all_data_call.body)
+  end
+
+
   dist_resp   = Net::HTTP.get_response( URI.parse(dist_api_url) )
   if dist_resp.code == "200"
     dist_result = JSON.parse(dist_resp.body)
-    @dist = (!dist_result.nil? && !dist_result["data"].empty? && dist_result["errors"].empty?) ? dist_result : no_data
+    @dist = (!dist_result.nil? && !dist_result["objects"].empty? && dist_result["errors"].empty?) ? dist_result : no_data
   else
     @dist = no_data
   end
@@ -25,7 +32,7 @@ get '/dashboard' do
   humid_resp   = Net::HTTP.get_response( URI.parse(humid_api_url) )
   if humid_resp.code == "200"
     humid_result = JSON.parse(humid_resp.body)
-    @humid = (!humid_result.nil? && !humid_result["data"].empty? && humid_result["errors"].empty?) ? humid_result : no_data
+    @humid = (!humid_result.nil? && !humid_result["objects"].empty? && humid_result["errors"].empty?) ? humid_result : no_data
   else
     @humid = no_data
   end
@@ -33,21 +40,15 @@ get '/dashboard' do
   temp_resp   = Net::HTTP.get_response( URI.parse(temp_api_url) )
   if temp_resp.code == "200"
     temp_result = JSON.parse(temp_resp.body)
-    @temp = (!temp_result.nil? && !temp_result["data"].empty? && temp_result["errors"].empty?) ? temp_result : no_data
+    @temp = (!temp_result.nil? && !temp_result["objects"].empty? && temp_result["errors"].empty?) ? temp_result : no_data
   else
     @temp = no_data
   end
 
-  # Testing the new API server responses
-  test = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
-  if test.code == "200"
-    test_result = JSON.parse(test.body)
-    p test_result
-  end
+  p @all_data
 
-  test2 = Net::HTTP.get_response(URI.parse("http://128.199.191.249/reading/node_XX/distance&date_range=1week"))
-
-  erb :dashboard, locals:{ dist:@dist["data"][0]["value"], humid:@humid["data"][0]["value"], temp:@temp["data"][0]["value"] }
+  #test2 = Net::HTTP.get_response(URI.parse("http://128.199.191.249/reading/node_XX/distance&date_range=1week"))
+  erb :dashboard, locals:{ dist:@dist["objects"][0]["value"], humid:@humid["objects"][0]["value"], temp:@temp["objects"][0]["value"] }
 end
 
 get '/dashboard/nodes' do
