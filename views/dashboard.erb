@@ -25,51 +25,34 @@
               <tr>
                 <th>#</th>
                 <th>名前</th>
-                <th>端末 ID</th>
                 <th>場所</th>
                 <th>ステータス</th>
               </tr>
             </thead>
             <tbody>
+            <% data.each do |node| %>
               <tr>
-                <td>1</td>
-                <td><a href="/dashboard/nodes/1">chibi_temp</a></td>
-                <td><a href="/dashboard/nodes/1">xxxxxxx01_uuid</a></td>
+                <td><%= node["id"] %></td>
+                <td><a href="/dashboard/nodes/<%= node["id"] %>"><%= node["alias"] %></a></td>
                 <td><a href="/dashboard/map"><i class="fa fa-map-marker"></i> Go to map</a></td>
                 <td><span class="label label-success"><i class="fa fa-check"></i> Online</span></td>
               </tr>
+            <% end %>
               <tr>
-                <td>2</td>
-                <td><a href="/dashboard/nodes/2">chibi_temp_dist</a></td>
-                <td><a href="/dashboard/nodes/2">xxxxxxx02_uuid</a></td>
-                <td><a href="/dashboard/map"><i class="fa fa-map-marker"></i> Go to map</a></td>
-                <td><span class="label label-success"><i class="fa fa-check"></i> Online</span></td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td><a href="/dashboard/nodes/3">saboten_hector_desk</a></td>
-                <td><a href="/dashboard/nodes/3">xxxxxxx01_uuid</a></td>
-                <td><a href="/dashboard/map"><i class="fa fa-map-marker"></i> Go to map</a></td>
-                <td><span class="label label-success"><i class="fa fa-check"></i> Online</span></td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td><a href="/dashboard/nodes/3">Low battery sample</a></td>
-                <td><a href="/dashboard/nodes/3">xxxxxxx03_uuid</a></td>
+                <td>997</td>
+                <td><a href="/dashboard/nodes/1">Low battery sample</a></td>
                 <td><a href="#"><i class="fa fa-map-marker"></i> Go to map</a></td>
                 <td><span class="label label-warning"><i class="fa fa-warning"></i> Battery low</span></td>
               </tr>
               <tr>
-                <td>5</td>
-                <td><a href="/dashboard/nodes/3">Out of battery sample</a></td>
-                <td><a href="/dashboard/nodes/3">xxxxxxx04_uuid</a></td>
+                <td>998</td>
+                <td><a href="/dashboard/nodes/1">Out of battery sample</a></td>
                 <td><a href="#"><i class="fa fa-map-marker"></i> Go to map</a></td>
                 <td><span class="label label-danger"><i class="fa fa-bolt"></i> Out of battery</span></td>
               </tr>
               <tr>
-                <td>6</td>
-                <td><a href="/dashboard/nodes/3">Offline sample</a></td>
-                <td><a href="/dashboard/nodes/3">xxxxxxx05_uuid</a></td>
+                <td>999</td>
+                <td><a href="/dashboard/nodes/1">Offline sample</a></td>
                 <td><a href="#"><i class="fa fa-map-marker"></i> Go to map</a></td>
                 <td><span class="label label-default"><i class="fa fa-close"></i> Offline</span></td>
               </tr>
@@ -88,7 +71,7 @@
                   <strong>水位</strong>
                 </div>
                 <div class="col-md-3">
-                  <%= dist %> cm
+                  50 cm
                 </div>
                 <div class="col-md-3">
                   (- 1.5 cm)
@@ -102,7 +85,7 @@
                   <strong>温度</strong>
                 </div>
                 <div class="col-md-3">
-                  <%= temp %> &deg;C
+                  14 &deg;C
                 </div>
                 <div class="col-md-3">
                   (+ 0.5 &deg;C)
@@ -116,7 +99,7 @@
                   <strong>湿度</strong>
                 </div>
                 <div class="col-md-3">
-                  <%= humid %> %
+                  21 %
                 </div>
                 <div class="col-md-3">
                   (+ 10 %)
@@ -152,7 +135,7 @@
                   <strong>温度</strong>
                 </div>
                 <div class="col-md-3">
-                  <%= temp %> &deg;C
+                  20 &deg;C
                 </div>
                 <div class="col-md-3">
                   (- 0.7 &deg;C)
@@ -211,6 +194,7 @@
 
     </div>
     <script type="text/javascript">
+      window.data = <%= data.to_json %>;
     </script>
   </body>
 </html>
