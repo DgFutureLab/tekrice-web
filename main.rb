@@ -9,11 +9,13 @@ get '/' do
 end
 
 get '/dashboard' do
-  no_data = {"objects" => [{"value" => "N/A"}]}
+  # Old no data object
+  #no_data = {"objects" => [{"value" => "N/A"}]}
+
   # Testing the new API server responses
   all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
   if all_data_call.code == "200"
-    #@all_data = JSON.parse(all_data_call.body)
+    @all_data = JSON.parse(all_data_call.body)
   end
 
   # TEST until API server works
@@ -55,38 +57,11 @@ get '/dashboard' do
       'longitude'=> 139.98876174814
      }]
 
-  #dist_api_url  = "http://128.199.191.249/reading/node_2/distance"
-  #humid_api_url = "http://128.199.191.249/reading/node_2/humidity"
-  #temp_api_url  = "http://128.199.191.249/reading/node_2/temperature"
-
-  #dist_resp   = Net::HTTP.get_response( URI.parse(dist_api_url) )
-  #if dist_resp.code == "200"
-  #  dist_result = JSON.parse(dist_resp.body)
-  #  @dist = (!dist_result.nil? && !dist_result["objects"].empty? && dist_result["errors"].empty?) ? dist_result : no_data
-  #else
-  #  @dist = no_data
-  #end
-
-  #humid_resp   = Net::HTTP.get_response( URI.parse(humid_api_url) )
-  #if humid_resp.code == "200"
-  #  humid_result = JSON.parse(humid_resp.body)
-  #  @humid = (!humid_result.nil? && !humid_result["objects"].empty? && humid_result["errors"].empty?) ? humid_result : no_data
-  #else
-  #  @humid = no_data
-  #end
-
-  #temp_resp   = Net::HTTP.get_response( URI.parse(temp_api_url) )
-  #if temp_resp.code == "200"
-  #  temp_result = JSON.parse(temp_resp.body)
-  #  @temp = (!temp_result.nil? && !temp_result["objects"].empty? && temp_result["errors"].empty?) ? temp_result : no_data
-  #else
-  #  @temp = no_data
-  #end
-
   #test2 = Net::HTTP.get_response(URI.parse("http://128.199.191.249/reading/node_XX/distance&date_range=1week"))
 
   #erb :dashboard, locals:{ dist:@dist["objects"][0]["value"], humid:@humid["objects"][0]["value"], temp:@temp["objects"][0]["value"] }
-  erb :dashboard, locals:{ data:test_data }
+
+  erb :dashboard, locals:{ data:@all_data["objects"] }
 end
 
 get '/dashboard/nodes' do
@@ -135,6 +110,13 @@ get '/dashboard/settings' do
 end
 
 get '/dashboard/map' do
+
+  # Testing the new API server responses
+  all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
+  if all_data_call.code == "200"
+    @all_data = JSON.parse(all_data_call.body)
+  end
+
   data =
     [{'latitude' => 35.143465822954,
       'alias'    => 'None',
@@ -173,7 +155,7 @@ get '/dashboard/map' do
       'longitude'=> 139.98876174814
      }]
 
-  erb :map, locals:{ data:data.to_json }
+  erb :map, locals:{ data:@all_data["objects"].to_json }
 end
 
 get '/test/test.json' do
