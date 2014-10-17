@@ -17,6 +17,7 @@ get '/dashboard' do
   if all_data_call.code == "200"
     @all_data = JSON.parse(all_data_call.body)
   end
+  p @all_data
 
   # TEST until API server works
   test_data = 
