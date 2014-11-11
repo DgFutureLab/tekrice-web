@@ -46,7 +46,7 @@ function setMarkers(map, markers) {
       position: siteLatLng,
       map: map,
       title: site["id"].toString(),
-      icon: '/antena-green.png',
+      icon: '/darkgreen.png',
       html: contentString[i]
     });
 
