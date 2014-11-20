@@ -17,7 +17,6 @@ get '/dashboard' do
   if all_data_call.code == "200"
     @all_data = JSON.parse(all_data_call.body)
   end
-  p @all_data
 
   # TEST until API server works
   test_data = 
@@ -157,6 +156,20 @@ get '/dashboard/map' do
      }]
 
   erb :map, locals:{ data:@all_data["objects"].to_json }
+end
+
+get '/test_redis' do
+  # Testing the new API server responses
+  all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
+  if all_data_call.code == "200"
+    @all_data = JSON.parse(all_data_call.body)
+  end
+
+  cache_file = File.join("cache", "test")
+  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 3600*24*5))
+    File.open(cache_file, "w"){ |f| f << @all_data }
+  end
+  send_file cache_file, :type => 'application/json'
 end
 
 get '/test/test.json' do
