@@ -169,7 +169,8 @@ get '/test_redis' do
   if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 3600*24*5))
     File.open(cache_file, "w"){ |f| f << @all_data }
   end
-  send_file cache_file, :type => 'application/json'
+  #send_file cache_file, :type => 'application/json'
+  erb :test_redis, locals:{ data:data.read }
 end
 
 get '/test/test.json' do

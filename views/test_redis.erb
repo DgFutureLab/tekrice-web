@@ -8,4 +8,7 @@
   <body>
     <%= partial(:topbar_template) %>
   </body>
+  <script type="text/javascript">
+    window.data = <%= data.to_json %>;
+  </script>
 </html>
