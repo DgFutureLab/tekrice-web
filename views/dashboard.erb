@@ -30,7 +30,7 @@
               </tr>
             </thead>
             <tbody>
-            <% data.each do |node| %>
+            <% data["objects"].each do |node| %>
               <tr>
                 <td><%= node["id"] %></td>
                 <td><a href="/dashboard/nodes/<%= node["id"] %>"><%= node["alias"] %></a></td>
@@ -194,7 +194,7 @@
 
     </div>
     <script type="text/javascript">
-      window.data = <%= data.to_json %>;
+      window.data = <%= json_data %>;
     </script>
   </body>
 </html>
