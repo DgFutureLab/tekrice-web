@@ -114,9 +114,16 @@ get '/dashboard/map' do
   # Testing the new API server responses
   all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
   if all_data_call.code == "200"
-    @all_data = JSON.parse(all_data_call.body)
+    @all_data = all_data_call.body
   end
 
+  # Check & creating cache file every 5 minutes
+  cache_file = File.join("cache", "alldata")
+  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*5))
+    File.open(cache_file, "w"){ |f| f << @all_data }
+  end
+
+  # Dummy data for testing
   data =
     [{'latitude' => 35.143465822954,
       'alias'    => 'None',
@@ -155,22 +162,22 @@ get '/dashboard/map' do
       'longitude'=> 139.98876174814
      }]
 
-  erb :map, locals:{ data:@all_data["objects"].to_json }
+  erb :map, locals:{ data:File.read(cache_file) }
 end
 
 get '/test_redis' do
   # Testing the new API server responses
   all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
   if all_data_call.code == "200"
-    @all_data = JSON.parse(all_data_call.body)
+    @all_data = all_data_call.body
   end
 
   cache_file = File.join("cache", "test")
-  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 3600*24*5))
+  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*5))
     File.open(cache_file, "w"){ |f| f << @all_data }
   end
-  #send_file cache_file, :type => 'application/json'
-  erb :test_redis, locals:{ data:data.read }
+
+  erb :test_redis, locals:{ data:File.read(cache_file) }
 end
 
 get '/test/test.json' do
