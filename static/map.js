@@ -1,8 +1,8 @@
-var contentString = new Array(window.data.length);
-var positionArray = new Array(window.data.length);
-var markerArray   = new Array(window.data.length);
+var contentString = new Array(window.data["objects"].length);
+var positionArray = new Array(window.data["objects"].length);
+var markerArray   = new Array(window.data["objects"].length);
 
-for (var i = 0; i < window.data.length; i++) {
+for (var i = 0; i < window.data["objects"].length; i++) {
   // Pop-up info
   contentString[i] = '<div class="content">'
     + '<a href="/dashboard/nodes/2">test</a>'
@@ -11,13 +11,13 @@ for (var i = 0; i < window.data.length; i++) {
     + '</div>'
     + '</div>';
 
-  positionArray[i] = new google.maps.LatLng( window.data[i]["latitude"], window.data[i]["longitude"] );
+  positionArray[i] = new google.maps.LatLng( window.data["objects"][i]["latitude"], window.data["objects"][i]["longitude"] );
 }
 
 function initialize() {
 
-  var lat1 = window.data[0]["latitude"];
-  var lng1 = window.data[0]["longitude"];
+  var lat1 = window.data["objects"][0]["latitude"];
+  var lng1 = window.data["objects"][0]["longitude"];
   var latLng1 = new google.maps.LatLng( lat1, lng1 );
 
   // Map options
@@ -30,11 +30,10 @@ function initialize() {
   // Initialize map
   var map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions );
 
-  setMarkers(map, window.data);
+  setMarkers(map, window.data["objects"]);
   infowindow = new google.maps.InfoWindow({
     content: "loading..."
   });
-
 }
 
 function setMarkers(map, markers) {
@@ -53,7 +52,6 @@ function setMarkers(map, markers) {
     var content = "Some content";
 
     google.maps.event.addListener(marker, "click", function() {
-      //alert(this.html);
       infowindow.setContent(this.html);
       infowindow.open(map, this);
     });
