@@ -5,7 +5,22 @@ var markerArray   = new Array(window.data["objects"].length);
 for (var i = 0; i < window.data["objects"].length; i++) {
   // Pop-up info
   contentString[i] = '<div class="content">'
-    + '<a href="/dashboard/nodes/2">test</a>'
+    + '<img src="/happyrice25.jpg"/>'
+    + 'Alias : '
+    + window.data["objects"][i]["alias"]
+    + '<br />'
+    + window.data["objects"][i]["sensors"][0]["alias"]
+    + ' : '
+    + window.data["objects"][i]["sensors"][0]["latest_reading"]["value"]
+    + '<br />'
+    + window.data["objects"][i]["sensors"][1]["alias"]
+    + ' : '
+    + window.data["objects"][i]["sensors"][1]["latest_reading"]["value"]
+    + '<br />'
+    + window.data["objects"][i]["sensors"][2]["alias"]
+    + ' : '
+    + window.data["objects"][i]["sensors"][2]["latest_reading"]["value"]
+    + '<br />'
     + '<div class="bodyContent">'
     + i.toString()
     + '</div>'
@@ -41,11 +56,19 @@ function setMarkers(map, markers) {
   for (var i = 0; i < markers.length; i++) {
     var site = markers[i];
     var siteLatLng = new google.maps.LatLng(site["latitude"], site["longitude"]);
+    var distance = window.data["objects"][i]["sensors"][0]["latest_reading"]["value"];
+    var icon;
+    if (parseFloat(distance) < 60) {
+      icon = '/redpin.png';
+    } else {
+      icon = '/greenpin.png';
+    }
+
     var marker = new google.maps.Marker({
       position: siteLatLng,
       map: map,
       title: site["id"].toString(),
-      icon: '/darkgreen.png',
+      icon: icon,
       html: contentString[i]
     });
 
