@@ -38,7 +38,7 @@ function initialize() {
   // Map options
   var mapOptions = {
     center: latLng1,
-    zoom: 22,
+    zoom: 19,
     mapTypeId: google.maps.MapTypeId.SATELLITE
   };
 
@@ -59,9 +59,9 @@ function setMarkers(map, markers) {
     var distance = window.data["objects"][i]["sensors"][0]["latest_reading"]["value"];
     var icon;
     if (parseFloat(distance) < 60) {
-      icon = '/redpin.png';
+      icon = '/redpin75.png';
     } else {
-      icon = '/greenpin.png';
+      icon = '/greenpin75.png';
     }
 
     var marker = new google.maps.Marker({
