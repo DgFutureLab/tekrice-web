@@ -49,6 +49,7 @@ function initialize() {
   infowindow = new google.maps.InfoWindow({
     content: "loading..."
   });
+
 }
 
 function setMarkers(map, markers) {
@@ -58,7 +59,7 @@ function setMarkers(map, markers) {
     var siteLatLng = new google.maps.LatLng(site["latitude"], site["longitude"]);
     var distance = window.data["objects"][i]["sensors"][0]["latest_reading"]["value"];
     var icon;
-    if (parseFloat(distance) < 60) {
+    if (parseFloat(distance) < 30) {
       icon = '/redpin75.png';
     } else {
       icon = '/greenpin75.png';

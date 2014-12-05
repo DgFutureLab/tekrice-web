@@ -2,13 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { top: 15%; height: 85%; width: 100% }
-      #detail { position:absolute; top:0; left:10%; height:15%; width:20%; }
-      #menu { position:absolute; top:7%; height:15%; width:80%; text-align:right; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/map.css" />
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzC24a6Dcov2UFSFhJyr0PYxqQV0LUOdY"></script>
     <script type="text/javascript">
       window.data = <%= data %>;
@@ -20,7 +14,19 @@
       <img src="/techrice-logo.png" height="100%" />
     </div>
     <div id="menu">
-      XXX XXX XXX
+      <nav>
+        <ul>
+          <li><a href="/">Top</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="#">Stations</a>
+            <ul>
+              <li><a href="#">Place 1</a></li>
+              <li><a href="#">Place 2</a></li>
+              <li><a href="#">Place 3</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
     </div>
     <div id="map-canvas">
     </div>
