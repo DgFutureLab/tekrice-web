@@ -99,3 +99,18 @@ nav ul ul {
 nav ul li:hover > ul {
   display: block;
 }
+
+.content {
+  width: 200px;
+}
+
+.ricepic {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bodyContent {
+  width: 200px;
+  text-align:center;
+}

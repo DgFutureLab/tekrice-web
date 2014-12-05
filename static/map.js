@@ -2,27 +2,41 @@ var contentString = new Array(window.data["objects"].length);
 var positionArray = new Array(window.data["objects"].length);
 var markerArray   = new Array(window.data["objects"].length);
 
+truncateDecimals = function (number, digits) {
+  var multiplier   = Math.pow(10,digits),
+      adjustedNum  = number * multiplier,
+      truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+  console.log(truncatedNum/multiplier);
+  return truncatedNum / multiplier;
+}
+
 for (var i = 0; i < window.data["objects"].length; i++) {
+  var riceimage;
+  if () {
+  } else {
+  }
   // Pop-up info
   contentString[i] = '<div class="content">'
+    + '<div class="ricepic">'
     + '<img src="/happyrice25.jpg"/>'
+    + '</div>'
+    + '<div class="bodyContent">'
+    /*
     + 'Alias : '
     + window.data["objects"][i]["alias"]
     + '<br />'
+    */
     + window.data["objects"][i]["sensors"][0]["alias"]
     + ' : '
-    + window.data["objects"][i]["sensors"][0]["latest_reading"]["value"]
+    + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][0]["latest_reading"]["value"]), 2)
     + '<br />'
     + window.data["objects"][i]["sensors"][1]["alias"]
     + ' : '
-    + window.data["objects"][i]["sensors"][1]["latest_reading"]["value"]
+    + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][1]["latest_reading"]["value"]), 2)
     + '<br />'
     + window.data["objects"][i]["sensors"][2]["alias"]
     + ' : '
-    + window.data["objects"][i]["sensors"][2]["latest_reading"]["value"]
-    + '<br />'
-    + '<div class="bodyContent">'
-    + i.toString()
+    + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][2]["latest_reading"]["value"]), 2)
     + '</div>'
     + '</div>';
 
