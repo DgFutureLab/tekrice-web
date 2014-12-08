@@ -11,14 +11,17 @@ truncateDecimals = function (number, digits) {
 }
 
 for (var i = 0; i < window.data["objects"].length; i++) {
+  var distance = window.data["objects"][i]["sensors"][0]["latest_reading"]["value"];
   var riceimage;
-  if () {
+  if (parseFloat(distance) < 30) {
+    riceimage = '<img src="/sadrice25.jpg"/>';
   } else {
+    riceimage = '<img src="/happyrice25.jpg"/>';
   }
   // Pop-up info
   contentString[i] = '<div class="content">'
     + '<div class="ricepic">'
-    + '<img src="/happyrice25.jpg"/>'
+    + riceimage
     + '</div>'
     + '<div class="bodyContent">'
     /*
