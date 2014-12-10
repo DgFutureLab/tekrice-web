@@ -6,7 +6,6 @@ truncateDecimals = function (number, digits) {
   var multiplier   = Math.pow(10,digits),
       adjustedNum  = number * multiplier,
       truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
-  console.log(truncatedNum/multiplier);
   return truncatedNum / multiplier;
 }
 
@@ -23,22 +22,24 @@ for (var i = 0; i < window.data["objects"].length; i++) {
     + '<div class="ricepic">'
     + riceimage
     + '</div>'
-    + '<div class="bodyContent">'
+    + '<div class="chart" id="chart'
+    + i.toString()
+    + '">'
     /*
     + 'Alias : '
     + window.data["objects"][i]["alias"]
     + '<br />'
     */
-    + window.data["objects"][i]["sensors"][0]["alias"]
-    + ' : '
+    /*+ window.data["objects"][i]["sensors"][0]["alias"]*/
+    + '<img src="/wheat10.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][0]["latest_reading"]["value"]), 2)
     + '<br />'
-    + window.data["objects"][i]["sensors"][1]["alias"]
-    + ' : '
+    /*+ window.data["objects"][i]["sensors"][1]["alias"]*/
+    + '<img src="/water50.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][1]["latest_reading"]["value"]), 2)
     + '<br />'
-    + window.data["objects"][i]["sensors"][2]["alias"]
-    + ' : '
+    /*+ window.data["objects"][i]["sensors"][2]["alias"]*/
+    + '<img src="/temp50.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][2]["latest_reading"]["value"]), 2)
     + '</div>'
     + '</div>';
@@ -90,14 +91,11 @@ function setMarkers(map, markers) {
       html: contentString[i]
     });
 
-    var content = "Some content";
-
     google.maps.event.addListener(marker, "click", function() {
       infowindow.setContent(this.html);
       infowindow.open(map, this);
     });
   }
-
 }
 
 google.maps.event.addDomListener( window, 'load', initialize );

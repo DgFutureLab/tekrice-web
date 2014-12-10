@@ -125,8 +125,15 @@ get '/dashboard/settings' do
   erb :settings
 end
 
-get '/dashboard/map' do
+get '/map' do
+  redirect '/map/hackerfarm'
+end
 
+get '/map/:site' do
+
+  if params[:site] != 'hackerfarm'
+    redirect '/map/hackerfarm'
+  end
   # Dummy data for testing
   data =
     [{'latitude' => 35.143465822954,

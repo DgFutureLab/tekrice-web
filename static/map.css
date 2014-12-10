@@ -101,16 +101,26 @@ nav ul li:hover > ul {
 }
 
 .content {
-  width: 200px;
+  width: 206px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.ricepic {
+  float: left;
+  width: 106px;
+}
+
+.chart {
+  float: left;
+  width: 100px;
+  font-weight: bold;
+}
+
+/*
 .ricepic {
   width: 200px;
   margin-left: auto;
   margin-right: auto;
 }
-
-.bodyContent {
-  width: 200px;
-  text-align:center;
-}
+*/
