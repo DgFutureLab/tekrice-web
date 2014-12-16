@@ -12,66 +12,7 @@ get '/dashboard' do
   # Old no data object
   #no_data = {"objects" => [{"value" => "N/A"}]}
 
-  # TEST until API server works
-  test_data = 
-    [{'latitude' => 35.143465822954,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 1}, {'id' => 2}, {'id' => 3}, {'id' => 4}, {'id' => 5}],
-      'id' => 1,
-      'longitude'=> 139.988288016007
-     },
-     {'latitude' => 35.1434376171813,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 6}, {'id' => 7}],
-      'id' => 2,
-      'longitude'=> 139.988905063503
-     },
-     {'latitude' => 35.1433998877005,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 8}, {'id' => 9}, {'id' => 10}],
-      'id' => 3,
-      'longitude'=> 139.98802001624
-     },
-     {'latitude' => 35.1437971184588,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 11}, {'id' => 12}, {'id' => 13}],
-      'id' => 4,
-      'longitude'=> 139.988863921149
-     },
-     {'latitude' => 35.1434500656277,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 14}, {'id' => 15}, {'id' => 16}, {'id' => 17}, {'id' => 18}, {'id' => 19}, {'id' => 20}, {'id' => 21}, {'id' => 22}],
-      'id' => 5,
-      'longitude'=> 139.988013523927
-     },
-     {'latitude' => 35.1438024370132,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 23}, {'id' => 24}, {'id' => 25}, {'id' => 26}, {'id' => 27}, {'id' => 28}],
-      'id' => 6,
-      'longitude'=> 139.98876174814
-     }]
-
-  # Checks cache file status before attempting to make API call
-
-  cache_file = File.join("cache", "alldata")
-
-  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-    all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
-
-    # Inserts new data into cache file
-    if all_data_call.code == "200"
-      @all_data = all_data_call.body
-      File.open(cache_file, "w"){ |f| f << @all_data }
-    else
-      if File.exist?(cache_file)
-        @all_data = File.read(cache_file)
-      else
-        @all_data = {"objects" => test_data}
-      end
-    end
-  else
-    @all_data = File.read(cache_file)
-  end
+  @all_data = get_data_for_site('hackerfarm')
 
   erb :dashboard, locals:{ data:JSON.parse(@all_data), json_data:@all_data }
 
@@ -134,8 +75,38 @@ get '/map/:site' do
   if params[:site] != 'hackerfarm'
     redirect '/map/hackerfarm'
   end
+  # TODO
+  # filter cache based on :site
+
+  @all_data = get_data_for_site(params[:site])
+
+  erb :map, locals:{ data:@all_data, site:params[:site] }
+end
+
+get '/list' do
+  redirect '/list/hackerfarm'
+end
+
+get '/list/:site' do
+end
+
+get '/test/test.json' do
+  data = { :location => "here", :data => "test data" }
+  response_data = data.to_json
+end
+
+helpers do
+  def partial template
+    erb template, layout:false
+  end
+end
+
+private
+
+def get_data_for_site(site)
+
   # Dummy data for testing
-  data =
+  test_data =
     [{'latitude' => 35.143465822954,
       'alias'    => 'None',
       'sensors'  => [{'id' => 1}, {'id' => 2}, {'id' => 3}, {'id' => 4}, {'id' => 5}],
@@ -175,34 +146,30 @@ get '/map/:site' do
 
   cache_file = File.join("cache", "alldata")
 
-  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-    all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
+  if site == 'hackerfarm'
 
-    # Inserts new data into cache file
-    if all_data_call.code == "200"
-      @all_data = all_data_call.body
-      File.open(cache_file, "w"){ |f| f << @all_data }
-    else
-      if File.exist?(cache_file)
-        @all_data = File.read(cache_file)
+    if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
+      all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
+
+      # Inserts new data into cache file
+      if all_data_call.code == "200"
+        @all_data = all_data_call.body
+        File.open(cache_file, "w"){ |f| f << @all_data }
       else
-        @all_data = {"objects" => test_data}
+        if File.exist?(cache_file)
+          @all_data = File.read(cache_file)
+        else
+          @all_data = {"objects" => test_data}
+        end
       end
+    else
+      @all_data = File.read(cache_file)
     end
+
+  # TODO placeholder for other sites
   else
-    @all_data = File.read(cache_file)
+    @all_data = {"objects" => test_data}
   end
 
-  erb :map, locals:{ data:@all_data }
-end
-
-get '/test/test.json' do
-  data = { :location => "here", :data => "test data" }
-  response_data = data.to_json
-end
-
-helpers do
-  def partial template
-    erb template, layout:false
-  end
+  return @all_data
 end
