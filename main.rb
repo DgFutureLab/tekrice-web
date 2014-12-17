@@ -25,41 +25,25 @@ get '/dashboard/nodes' do
   erb :nodes
 end
 
-get '/dashboard/nodes/:uuid' do
-  # Placeholder for all node data
-  #
-  #api_url = "http://128.199.191.249/nodes/all"
-  no_data = {"objects" => [{"value" => "N/A"}]}
-  
-  dist_api_url  = "http://128.199.191.249/reading/node_1/distance"
-  humid_api_url = "http://128.199.191.249/reading/node_1/humidity"
-  temp_api_url  = "http://128.199.191.249/reading/node_1/temperature"
-
-  dist_resp   = Net::HTTP.get_response( URI.parse(dist_api_url) )
-  if dist_resp.code == "200"
-    dist_result = JSON.parse(dist_resp.body)
-    @dist = (!dist_result.nil? && !dist_result["objects"].empty? && dist_result["errors"].empty?) ? dist_result : no_data
-  else
-    @dist = no_data
+get '/node/:site/:uuid' do
+  @all_data = JSON.parse(get_data_for_site(params[:site]))
+  @all_data["objects"].each do |node|
+    if node["alias"] == params[:uuid]
+      node["sensors"].each do |x|
+        if x["alias"] == 'humidity'
+          @humid = x["latest_reading"]["value"]
+        end
+        if x["alias"] == 'distance'
+          @dist  = x["latest_reading"]["value"]
+        end
+        if x["alias"] == 'temperature'
+          @temp  = x["latest_reading"]["value"]
+        end
+      end
+    end
   end
 
-  humid_resp   = Net::HTTP.get_response( URI.parse(humid_api_url) )
-  if humid_resp.code == "200"
-    humid_result = JSON.parse(humid_resp.body)
-    @humid = (!humid_result.nil? && !humid_result["objects"].empty? && humid_result["errors"].empty?) ? humid_result : no_data
-  else
-    @humid = no_data
-  end
-
-  temp_resp   = Net::HTTP.get_response( URI.parse(temp_api_url) )
-  if temp_resp.code == "200"
-    temp_result = JSON.parse(temp_resp.body)
-    @temp = (!temp_result.nil? && !temp_result["objects"].empty? && temp_result["errors"].empty?) ? temp_result : no_data
-  else
-    @temp = no_data
-  end
-
-  erb :nodedetail, locals:{ id:params[:uuid], dist:@dist["objects"][0]["value"], humid:@humid["objects"][0]["value"], temp:@temp["objects"][0]["value"] }
+  erb :nodedetail, locals:{ id:params[:uuid], dist:@dist, humid:@humid, temp:@temp }
 end
 
 get '/dashboard/settings' do

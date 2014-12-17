@@ -42,7 +42,7 @@
           <% data["objects"].each do |node| %>
           <tr>
             <td><%= node["id"] %></td>
-            <td><a href="/dashboard/nodes/<%= node["id"] %>"><%= node["alias"] %></a></td>
+            <td><a href="/node/<%= site %>/<%= node["alias"] %>"><%= node["alias"] %></a></td>
             <td><%= node["latitude"] %> | <%= node["longitude"]%></td>
             <td><a href="/map/<%= site %>"><i class="fa fa-map-marker"></i> 地図</a></td>
             <td><%= node["sensors"][1]["latest_reading"]["value"].round(2) %></td>
