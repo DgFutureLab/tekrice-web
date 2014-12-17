@@ -41,6 +41,10 @@ for (var i = 0; i < window.data["objects"].length; i++) {
     /*+ window.data["objects"][i]["sensors"][2]["alias"]*/
     + '<img src="/temp50.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][2]["latest_reading"]["value"]), 2)
+    + '<br />'
+    + '<a href="/node/hackerfarm/'
+    + window.data["objects"][i]["alias"]
+    + '">Node Link</a>'
     + '</div>'
     + '</div>';
 
