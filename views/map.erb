@@ -17,15 +17,15 @@
     <div id="menu">
       <nav>
         <ul>
-          <li><a href="#">Sites</a>
+          <li><a href="#">サイト</a>
             <ul>
-              <li><a href="/map/hackerfarm">HackerFarm</a></li>
-              <li><a href="/map/site2">Site 2</a></li>
-              <li><a href="/map/site3">Site 3</a></li>
+              <li><a href="/map/<%= site %>"><%= site %></a></li>
+              <li><a href="/map/site2">サイト 2</a></li>
+              <li><a href="/map/site3">サイト 3</a></li>
             </ul>
           </li>
-          <li><a href="/list/<%= site %>">List</a></li>
-          <li><a href="/#contact">About</a></li>
+          <li><a href="/list/<%= site %>">リスト</a></li>
+          <li><a href="/settings">設定</a></li>
         </ul>
       </nav>
     </div>

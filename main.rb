@@ -88,6 +88,9 @@ get '/list' do
 end
 
 get '/list/:site' do
+  @all_data = get_data_for_site('hackerfarm')
+
+  erb :list, locals:{ data:JSON.parse(@all_data), json_data:@all_data, site:params[:site] }
 end
 
 get '/test/test.json' do
