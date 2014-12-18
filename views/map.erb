@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="/map.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzC24a6Dcov2UFSFhJyr0PYxqQV0LUOdY"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -17,15 +18,15 @@
     <div id="menu">
       <nav>
         <ul>
-          <li><a href="#">サイト</a>
+          <li><a href="#"><i class="fa fa-rss"></i>&nbsp; サイト</a>
             <ul>
               <li><a href="/map/<%= site %>"><%= site %></a></li>
               <li><a href="/map/site2">サイト 2</a></li>
               <li><a href="/map/site3">サイト 3</a></li>
             </ul>
           </li>
-          <li><a href="/list/<%= site %>">リスト</a></li>
-          <li><a href="/settings">設定</a></li>
+          <li><a href="/list/<%= site %>"><i class="fa fa-file-text-o"></i>&nbsp; リスト</a></li>
+          <li><a href="/settings"><i class="fa fa-gear"></i>&nbsp; 設定</a></li>
         </ul>
       </nav>
     </div>

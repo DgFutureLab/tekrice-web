@@ -46,8 +46,8 @@ get '/node/:site/:uuid' do
   erb :nodedetail, locals:{ id:params[:uuid], dist:@dist, humid:@humid, temp:@temp }
 end
 
-get '/dashboard/settings' do
-  erb :settings
+get '/settings' do
+  erb :settings, locals:{ site:"hackerfarm" }
 end
 
 get '/map' do
