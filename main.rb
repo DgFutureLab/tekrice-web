@@ -141,7 +141,12 @@ def get_data_for_site(site)
       # Inserts new data into cache file
       if all_data_call.code == "200"
         @all_data = all_data_call.body
-        File.open(cache_file, "w"){ |f| f << @all_data }
+        x = JSON.parse(@all_data)
+        if x["objects"][0]["sensors"][0]["latest_reading"].nil?
+          @all_data = File.read(cache_file)
+        else
+          File.open(cache_file, "w"){ |f| f << @all_data }
+        end
       else
         if File.exist?(cache_file)
           @all_data = File.read(cache_file)
