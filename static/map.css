@@ -9,25 +9,25 @@ body {
 }
 
 #map-canvas {
-  top: 15%;
-  height: 85%;
+  clear: both;
+  height: 100%;
   width: 100%;
   z-index: 0;
 }
 
 #detail {
-  position: absolute;
+  /*position: absolute;*/
   top: 0;
   left: 10%;
-  height: 15%;
-  width: 20%;
+  width: 15%;
+  float:left;
 }
 
 #menu {
-  position: absolute;
   height: 15%;
-  width: 100%;
+  width: 85%;
   text-align: center;
+  float:right;
 }
 
 nav * {
