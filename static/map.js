@@ -9,8 +9,8 @@ truncateDecimals = function (number, digits) {
   return truncatedNum / multiplier;
 }
 
-for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
-  var distance = window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"];
+for (var i = 0; i < window.data["objects"].length; i++) {
+  var distance = window.data["objects"][i]["sensors"][0]["latest_reading"]["value"];
   var riceimage;
   if (parseFloat(distance) < 30) {
     riceimage = '<img src="/sadrice25.jpg"/>';
@@ -32,29 +32,29 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     */
     /*+ window.data["objects"][i]["sensors"][0]["alias"]*/
     + '<img src="/wheat10.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][0]["latest_reading"]), 2)
+    + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][0]["latest_reading"]["value"]), 2)
     + '<br />'
     /*+ window.data["objects"][i]["sensors"][1]["alias"]*/
     + '<img src="/water50.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"]), 2)
+    + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][1]["latest_reading"]["value"]), 2)
     + '<br />'
     /*+ window.data["objects"][i]["sensors"][2]["alias"]*/
     + '<img src="/temp50.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][2]["latest_reading"]), 2)
+    + truncateDecimals(parseFloat(window.data["objects"][i]["sensors"][2]["latest_reading"]["value"]), 2)
     + '<br />'
     + '<a href="/node/hackerfarm/'
-    + window.data["objects"][0]["nodes"][i]["alias"]
+    + window.data["objects"][i]["alias"]
     + '">Node Link</a>'
     + '</div>'
     + '</div>';
 
-  positionArray[i] = new google.maps.LatLng( window.data["objects"][0]["nodes"][i]["latitude"], window.data["objects"][0]["nodes"][i]["longitude"] );
+  positionArray[i] = new google.maps.LatLng( window.data["objects"][i]["latitude"], window.data["objects"][i]["longitude"] );
 }
 
 function initialize() {
 
-  var lat1 = window.data["objects"][0]["nodes"][0]["latitude"];
-  var lng1 = window.data["objects"][0]["nodes"][0]["longitude"];
+  var lat1 = window.data["objects"][0]["latitude"];
+  var lng1 = window.data["objects"][0]["longitude"];
   var latLng1 = new google.maps.LatLng( lat1, lng1 );
 
   // Map options
@@ -67,7 +67,7 @@ function initialize() {
   // Initialize map
   var map = new google.maps.Map( document.getElementById('map-canvas'), mapOptions );
 
-  setMarkers(map, window.data["objects"][0]["nodes"]);
+  setMarkers(map, window.data["objects"]);
   infowindow = new google.maps.InfoWindow({
     content: "loading..."
   });
@@ -77,9 +77,9 @@ function initialize() {
 function setMarkers(map, markers) {
 
   for (var i = 0; i < markers.length; i++) {
-    var node = markers[i];
-    var nodeLatLng = new google.maps.LatLng(node["latitude"], node["longitude"]);
-    var distance   = markers[i]["sensors"][1]["latest_reading"];
+    var site = markers[i];
+    var siteLatLng = new google.maps.LatLng(site["latitude"], site["longitude"]);
+    var distance = window.data["objects"][i]["sensors"][0]["latest_reading"]["value"];
     var icon;
     if (parseFloat(distance) < 30) {
       icon = '/redpin75.png';
@@ -88,9 +88,9 @@ function setMarkers(map, markers) {
     }
 
     var marker = new google.maps.Marker({
-      position: nodeLatLng,
+      position: siteLatLng,
       map: map,
-      title: node["alias"].toString(),
+      title: site["id"].toString(),
       icon: icon,
       html: contentString[i]
     });

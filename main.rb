@@ -135,14 +135,18 @@ def get_data_for_site(site)
 
   if site == 'hackerfarm'
 
-    #if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-      #all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
-      all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/site/17"))
+    if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
+      all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
 
       # Inserts new data into cache file
       if all_data_call.code == "200"
         @all_data = all_data_call.body
-        File.open(cache_file, "w"){ |f| f << @all_data }
+        x = JSON.parse(@all_data)
+        if x["objects"][0]["sensors"][0]["latest_reading"].nil?
+          @all_data = File.read(cache_file)
+        else
+          File.open(cache_file, "w"){ |f| f << @all_data }
+        end
       else
         if File.exist?(cache_file)
           @all_data = File.read(cache_file)
@@ -150,9 +154,9 @@ def get_data_for_site(site)
           @all_data = {"objects" => test_data}
         end
       end
-    #else
-    #  @all_data = File.read(cache_file)
-    #end
+    else
+      @all_data = File.read(cache_file)
+    end
 
   # TODO placeholder for other sites
   else
