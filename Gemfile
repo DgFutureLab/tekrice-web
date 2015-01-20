@@ -1,2 +1,10 @@
 source 'https://rubygems.org'
 gem 'sinatra'
+
+gem 'rspec'
+gem 'capybara'
+#gem 'capybara-webkit'
+gem 'selenium-webdriver'
+gem 'poltergeist'
+gem 'rack_session_access'
+gem 'database_cleaner'
