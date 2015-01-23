@@ -39,15 +39,15 @@
           </tr>
         </thead>
         <tbody>
-          <% data["objects"].each do |node| %>
+          <% data["objects"][0]["nodes"].each do |node| %>
           <tr>
             <td><%= node["id"] %></td>
             <td><a href="/node/<%= site %>/<%= node["alias"] %>"><%= node["alias"] %></a></td>
             <td><%= node["latitude"] %> | <%= node["longitude"]%></td>
             <td><a href="/map/<%= site %>"><i class="fa fa-map-marker"></i> 地図</a></td>
-            <td><%= node["sensors"][1]["latest_reading"]["value"].round(2) %></td>
-            <td><%= node["sensors"][2]["latest_reading"]["value"].round(2) %></td>
-            <td><%= node["sensors"][0]["latest_reading"]["value"].round(2) %></td>
+            <td><%= !node["sensors"][1]["latest_reading"].nil? ? node["sensors"][1]["latest_reading"].round(2) : "最新情報ありません" %></td>
+            <td><%= !node["sensors"][2]["latest_reading"].nil? ? node["sensors"][2]["latest_reading"].round(2) : "最新情報ありません" %></td>
+            <td><%= !node["sensors"][0]["latest_reading"].nil? ? node["sensors"][0]["latest_reading"].round(2) : "最新情報ありません" %></td>
             <td><span class="label label-success"><i class="fa fa-check"></i> Online</span></td>
           </tr>
           <% end %>
