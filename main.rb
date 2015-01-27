@@ -77,11 +77,6 @@ get '/list/:site' do
   erb :list, locals:{ data:JSON.parse(@all_data), json_data:@all_data, site:params[:site] }
 end
 
-get '/test/test.json' do
-  data = { :location => "here", :data => "test data" }
-  response_data = data.to_json
-end
-
 helpers do
   def partial template
     erb template, layout:false
@@ -94,42 +89,100 @@ def get_data_for_site(site)
 
   # Dummy data for testing
   test_data =
-    [{'latitude' => 35.143465822954,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 1}, {'id' => 2}, {'id' => 3}, {'id' => 4}, {'id' => 5}],
-      'id' => 1,
-      'longitude'=> 139.988288016007
-     },
-     {'latitude' => 35.1434376171813,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 6}, {'id' => 7}],
-      'id' => 2,
-      'longitude'=> 139.988905063503
-     },
-     {'latitude' => 35.1433998877005,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 8}, {'id' => 9}, {'id' => 10}],
-      'id' => 3,
-      'longitude'=> 139.98802001624
-     },
-     {'latitude' => 35.1437971184588,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 11}, {'id' => 12}, {'id' => 13}],
-      'id' => 4,
-      'longitude'=> 139.988863921149
-     },
-     {'latitude' => 35.1434500656277,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 14}, {'id' => 15}, {'id' => 16}, {'id' => 17}, {'id' => 18}, {'id' => 19}, {'id' => 20}, {'id' => 21}, {'id' => 22}],
-      'id' => 5,
-      'longitude'=> 139.988013523927
-     },
-     {'latitude' => 35.1438024370132,
-      'alias'    => 'None',
-      'sensors'  => [{'id' => 23}, {'id' => 24}, {'id' => 25}, {'id' => 26}, {'id' => 27}, {'id' => 28}],
-      'id' => 6,
-      'longitude'=> 139.98876174814
-     }]
+  {
+    "errors" => [],
+    "objects"=> 
+      [{
+        "alias" => "hackerfarm",
+        "id"    => 17,
+        "nodes" => 
+          [{
+            "alias" => "testdata1",
+            "id"    => 1,
+            "latitude" => 35.143465822954,
+            "longitude"=> 139.988288016007,
+            "sensors"  => [
+              {
+                  "alias" => "temperature",
+                  "id"    => 18,
+                  "latest_reading" => 20
+              },
+              {
+                  "alias" => "distance",
+                  "id"    => 19,
+                  "latest_reading" => 30
+              },
+              {
+                  "alias" => "humidity",
+                  "id"    => 20,
+                  "latest_reading" => 5
+              },
+              {
+                  "alias" => "vbat",
+                  "id"    => 21,
+                  "latest_reading" => 90
+              }
+            ]
+          },
+          {
+            "alias" => "testdata2",
+            "id"    => 2,
+            "latitude" => 35.1434376171813,
+            "longitude"=> 139.988905063503,
+            "sensors"  => [
+              {
+                  "alias" => "temperature",
+                  "id"    => 22,
+                  "latest_reading" => 20
+              },
+              {
+                  "alias" => "distance",
+                  "id"    => 23,
+                  "latest_reading" => 28
+              },
+              {
+                  "alias" => "humidity",
+                  "id"    => 24,
+                  "latest_reading" => 5
+              },
+              {
+                  "alias" => "vbat",
+                  "id"    => 25,
+                  "latest_reading" => 87
+              }
+            ]
+          },
+          {
+            "alias" => "testdata3",
+            "id"    => 9,
+            "latitude" => 35.1433998877005,
+            "longitude"=> 139.98802001624,
+            "sensors"  => [
+              {
+                  "alias" => "temperature",
+                  "id"    => 26,
+                  "latest_reading" => nil
+              },
+              {
+                  "alias" => "distance",
+                  "id"    => 27,
+                  "latest_reading" => nil
+              },
+              {
+                  "alias" => "humidity",
+                  "id"    => 28,
+                  "latest_reading" => nil
+              },
+              {
+                  "alias" => "vbat",
+                  "id"    => 29,
+                  "latest_reading" => nil
+              }
+            ]
+          }]
+      }],
+    "query" => {}
+  }
 
   cache_file = File.join("cache", "alldata")
 
@@ -147,7 +200,7 @@ def get_data_for_site(site)
         if File.exist?(cache_file)
           @all_data = File.read(cache_file)
         else
-          @all_data = {"objects" => test_data}
+          @all_data = test_data
         end
       end
     #else
@@ -156,7 +209,7 @@ def get_data_for_site(site)
 
   # TODO placeholder for other sites
   else
-    @all_data = {"objects" => test_data}
+    @all_data = test_data
   end
 
   return @all_data
