@@ -10,8 +10,9 @@ describe 'Routes respond' do
   end
 
   it '/map redirects to /map/hackerfarm' do
-    visit '/map'
-    expect( current_path ).to eq("/map/hackerfarm")
+    get '/map'
+    expect( last_response ).to be_redirect
+    expect( last_response.location ).to include( '/map/hackerfarm' )
   end
 
   it '/settings' do
@@ -20,8 +21,9 @@ describe 'Routes respond' do
   end
 
   it '/list redirects to /list/hackerfarm' do
-    visit '/list'
-    expect( current_path ).to eq("/list/hackerfarm")
+    get '/list'
+    expect( last_response ).to be_redirect
+    expect( last_response.location ).to include( '/list/hackerfarm' )
   end
 
 end
