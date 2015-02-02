@@ -5,7 +5,7 @@ require 'net/http'
 set :public_folder, File.dirname(__FILE__) + '/static'
 
 use Rack::Auth::Basic, "Restricted Area" do |username, password|
-  username == 'techrice' and password == 'h4ck3rf4rm'
+  username == 'techrice' and password == 'tacobeya12'
 end
 
 get '/' do

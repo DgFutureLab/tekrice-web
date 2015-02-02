@@ -63,22 +63,30 @@ body {
   width:100%;
   padding-top: 30px;
   padding-bottom: 30px;
-  background-color: #50A946;
+  color: #0C4C29;
+}
+
+#features {
+  width:100%;
   color: white;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #50A946;
 }
 
 #iphonemockup {
   width: 100%;
   padding-top: 30px;
   padding-bottom: 30px;
-  background-color: #50A946;
-  color: white;
+  color: #0C4C29;
 }
 
-#features {
-  color: #0C4C29;
+#maplink {
+  width: 100%;
   padding-top: 30px;
   padding-bottom: 30px;
+  background-color: #50A946;
+  color: white;
 }
 
 #fontsize {
