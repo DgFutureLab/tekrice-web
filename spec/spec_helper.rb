@@ -52,6 +52,9 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
 
   config.include Rack::Test::Methods
+  config.before(:each) do
+    authorize 'techrice', 'h4ck3rf4rm'
+  end
 end
 
 def app
