@@ -59,8 +59,25 @@ body {
 }
 
 /* Text containers */
+#farmersmile {
+  width:100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #50A946;
+  color: white;
+}
+
+#iphonemockup {
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #50A946;
+  color: white;
+}
+
 #features {
-  padding-top: 20px;
+  color: #0C4C29;
+  padding-top: 30px;
   padding-bottom: 30px;
 }
 
@@ -70,7 +87,7 @@ body {
 
 
 #contact {
-  padding-top: 20px;
+  padding-top: 30px;
   padding-bottom: 30px;
   width: 100%;
   background-color: #EFEFEF;
@@ -191,4 +208,11 @@ body {
   .cover-container {
     width: 700px;
   }
+}
+
+/* Vertical Centering */
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
 }
