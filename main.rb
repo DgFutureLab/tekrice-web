@@ -54,29 +54,18 @@ get '/settings' do
   erb :settings, locals:{ site:"hackerfarm" }
 end
 
-get '/map' do
-  redirect '/map/hackerfarm'
-end
-
 get '/map/:site' do
-
-  if params[:site] != 'hackerfarm'
-    redirect '/map/hackerfarm'
-  end
-  # TODO
-  # filter cache based on :site
+  #if params[:site] != 'hackerfarm' || params[:site] != 'tokyo' || params[:site] != 'Kamakura'
+  #  redirect '/map/hackerfarm'
+  #end
 
   @all_data = get_data_for_site(params[:site])
 
   erb :map, locals:{ data:@all_data, site:params[:site] }
 end
 
-get '/list' do
-  redirect '/list/hackerfarm'
-end
-
 get '/list/:site' do
-  @all_data = get_data_for_site('hackerfarm')
+  @all_data = get_data_for_site(params[:site])
 
   erb :list, locals:{ data:JSON.parse(@all_data), json_data:@all_data, site:params[:site] }
 end
@@ -97,7 +86,7 @@ def get_data_for_site(site)
     "errors" => [],
     "objects"=> 
       [{
-        "alias" => "hackerfarm",
+        "alias" => "dummydata",
         "id"    => 17,
         "nodes" => 
           [{
@@ -188,13 +177,14 @@ def get_data_for_site(site)
     "query" => {}
   }
 
-  cache_file = File.join("cache", "alldata")
+  cache_file   = File.join("cache", site)
+  site_id_hash = {'hackerfarm' => 17, 'Kamakura' => 69, 'DG' => 70, 'tokyo' => 62,'webtest' => 63}
 
-  if site == 'hackerfarm'
+  if site == 'hackerfarm' || site == 'Kamakura' || site == 'DG' || site == 'tokyo'
 
-    #if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-      #all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/node/all"))
-      all_data_call = Net::HTTP.get_response(URI.parse("http://128.199.191.249/site/17"))
+    if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
+      api_link = "http://128.199.191.249/site/" + site_id_hash[site].to_s
+      all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
       # Inserts new data into cache file
       if all_data_call.code == "200"
@@ -207,9 +197,9 @@ def get_data_for_site(site)
           @all_data = test_data
         end
       end
-    #else
-    #  @all_data = File.read(cache_file)
-    #end
+    else
+      @all_data = File.read(cache_file)
+    end
 
   # TODO placeholder for other sites
   else

@@ -1,0 +1,40 @@
+{
+    "errors": [], 
+    "objects": [
+        {
+            "alias": "tokyo", 
+            "id": 62, 
+            "nodes": [
+                {
+                    "alias": "shibuya", 
+                    "id": 13, 
+                    "latitude": 35.673343, 
+                    "longitude": 139.7103, 
+                    "sensors": [
+                        {
+                            "alias": "temperature", 
+                            "id": 42, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "distance", 
+                            "id": 43, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "humidity", 
+                            "id": 44, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "vbat", 
+                            "id": 45, 
+                            "latest_reading": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "query": {}
+}

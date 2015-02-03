@@ -1,0 +1,96 @@
+{
+    "errors": [], 
+    "objects": [
+        {
+            "alias": "hackerfarm", 
+            "id": 17, 
+            "nodes": [
+                {
+                    "alias": "garden5", 
+                    "id": 7, 
+                    "latitude": 35.144828, 
+                    "longitude": 139.962516, 
+                    "sensors": [
+                        {
+                            "alias": "temperature", 
+                            "id": 18, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "distance", 
+                            "id": 19, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "humidity", 
+                            "id": 20, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "vbat", 
+                            "id": 21, 
+                            "latest_reading": null
+                        }
+                    ]
+                }, 
+                {
+                    "alias": "garden3", 
+                    "id": 8, 
+                    "latitude": 35.144838, 
+                    "longitude": 139.962526, 
+                    "sensors": [
+                        {
+                            "alias": "temperature", 
+                            "id": 22, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "distance", 
+                            "id": 23, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "humidity", 
+                            "id": 24, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "vbat", 
+                            "id": 25, 
+                            "latest_reading": null
+                        }
+                    ]
+                }, 
+                {
+                    "alias": "joe_mama", 
+                    "id": 9, 
+                    "latitude": null, 
+                    "longitude": null, 
+                    "sensors": [
+                        {
+                            "alias": "temperature", 
+                            "id": 26, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "distance", 
+                            "id": 27, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "humidity", 
+                            "id": 28, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "vbat", 
+                            "id": 29, 
+                            "latest_reading": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "query": {}
+}

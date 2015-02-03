@@ -1,0 +1,96 @@
+{
+    "errors": [], 
+    "objects": [
+        {
+            "alias": "DG", 
+            "id": 70, 
+            "nodes": [
+                {
+                    "alias": "geiger1", 
+                    "id": 21, 
+                    "latitude": 35.646232, 
+                    "longitude": 139.703702, 
+                    "sensors": [
+                        {
+                            "alias": "temperature", 
+                            "id": 62, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "distance", 
+                            "id": 63, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "humidity", 
+                            "id": 64, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "vbat", 
+                            "id": 65, 
+                            "latest_reading": null
+                        }
+                    ]
+                }, 
+                {
+                    "alias": "geiger2", 
+                    "id": 22, 
+                    "latitude": 35.646107, 
+                    "longitude": 139.703919, 
+                    "sensors": [
+                        {
+                            "alias": "temperature", 
+                            "id": 66, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "distance", 
+                            "id": 67, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "humidity", 
+                            "id": 68, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "vbat", 
+                            "id": 69, 
+                            "latest_reading": null
+                        }
+                    ]
+                }, 
+                {
+                    "alias": "geiger3", 
+                    "id": 23, 
+                    "latitude": 35.646339, 
+                    "longitude": 139.703987, 
+                    "sensors": [
+                        {
+                            "alias": "temperature", 
+                            "id": 70, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "distance", 
+                            "id": 71, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "humidity", 
+                            "id": 72, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "vbat", 
+                            "id": 73, 
+                            "latest_reading": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "query": {}
+}
