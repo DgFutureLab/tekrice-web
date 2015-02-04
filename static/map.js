@@ -25,24 +25,19 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     + '<div class="chart" id="chart'
     + i.toString()
     + '">'
-    /*
-    + 'Alias : '
-    + window.data["objects"][i]["alias"]
     + '<br />'
-    */
-    /*+ window.data["objects"][i]["sensors"][0]["alias"]*/
     + '<img src="/wheat10.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][0]["latest_reading"]), 2)
     + '<br />'
-    /*+ window.data["objects"][i]["sensors"][1]["alias"]*/
     + '<img src="/water50.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"]), 2)
     + '<br />'
-    /*+ window.data["objects"][i]["sensors"][2]["alias"]*/
     + '<img src="/temp50.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][2]["latest_reading"]), 2)
     + '<br />'
-    + '<a href="/node/hackerfarm/'
+    + '<a href="/node/'
+    + window.nodesite
+    + '/'
     + window.data["objects"][0]["nodes"][i]["alias"]
     + '">Node Link</a>'
     + '</div>'

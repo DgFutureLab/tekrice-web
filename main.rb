@@ -37,23 +37,23 @@ get '/node/:site/:uuid' do
 
   @all_data = JSON.parse(@all_data)
 
-  @all_data["objects"].each do |node|
+  @all_data["objects"][0]["nodes"].each do |node|
     if node["alias"] == params[:uuid]
       node["sensors"].each do |x|
         if x["alias"] == 'humidity'
-          @humid = x["latest_reading"]["value"]
+          @humid = x["latest_reading"]
         end
         if x["alias"] == 'distance'
-          @dist  = x["latest_reading"]["value"]
+          @dist  = x["latest_reading"]
         end
         if x["alias"] == 'temperature'
-          @temp  = x["latest_reading"]["value"]
+          @temp  = x["latest_reading"]
         end
       end
     end
   end
 
-  erb :nodedetail, locals:{ id:params[:uuid], dist:@dist, humid:@humid, temp:@temp }
+  erb :nodedetail, locals:{ id:params[:uuid], dist:@dist, humid:@humid, temp:@temp, site:params[:site] }
 end
 
 get '/settings' do
