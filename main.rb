@@ -30,7 +30,13 @@ get '/dashboard/nodes' do
 end
 
 get '/node/:site/:uuid' do
-  @all_data = JSON.parse(get_data_for_site(params[:site]))
+  @all_data = get_data_for_site(params[:site])
+
+  #TODO remove when real data is available
+  @all_data = make_up_dummy_data_for_dataset(@all_data)
+
+  @all_data = JSON.parse(@all_data)
+
   @all_data["objects"].each do |node|
     if node["alias"] == params[:uuid]
       node["sensors"].each do |x|
@@ -61,11 +67,17 @@ get '/map/:site' do
 
   @all_data = get_data_for_site(params[:site])
 
+  #TODO remove when real data is available
+  @all_data = make_up_dummy_data_for_dataset(@all_data)
+
   erb :map, locals:{ data:@all_data, site:params[:site] }
 end
 
 get '/list/:site' do
   @all_data = get_data_for_site(params[:site])
+
+  #TODO remove when real data is available
+  @all_data = make_up_dummy_data_for_dataset(@all_data)
 
   erb :list, locals:{ data:JSON.parse(@all_data), json_data:@all_data, site:params[:site] }
 end
@@ -207,4 +219,17 @@ def get_data_for_site(site)
   end
 
   return @all_data
+end
+
+def make_up_dummy_data_for_dataset(data)
+  parsed_data = JSON.parse(data)
+  parsed_data["objects"][0]["nodes"].each_with_index do |node, node_index|
+    node["sensors"].each_with_index do |reading, sensor_index|
+      if reading["latest_reading"].nil?
+        parsed_data["objects"][0]["nodes"][node_index]["sensors"][sensor_index]["latest_reading"] = 10 + rand(30)
+      end
+    end
+  end
+
+  return parsed_data.to_json
 end
