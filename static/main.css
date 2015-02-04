@@ -82,6 +82,7 @@ body {
 }
 
 #maplink {
+  background-image: url("/googlemap.png");
   width: 100%;
   padding-top: 30px;
   padding-bottom: 30px;
@@ -220,7 +221,5 @@ body {
 
 /* Vertical Centering */
 .vcenter {
-  display: inline-block;
-  vertical-align: middle;
-  float: none;
+  margin-top: 15%;
 }
