@@ -55,7 +55,7 @@ function initialize() {
   // Map options
   var mapOptions = {
     center: latLng1,
-    zoom: 19,
+    zoom: 22,
     mapTypeId: google.maps.MapTypeId.SATELLITE
   };
 
