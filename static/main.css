@@ -225,3 +225,13 @@ body {
 .vcenter {
   margin-top: 7%;
 }
+
+/* NavBar stuff */
+.navbar {
+  background-color: #2E833E;
+}
+
+.blue-button {
+  background-color: #2DA7E0;
+  border-color: #2DA7E0;
+}
