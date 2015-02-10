@@ -5,7 +5,7 @@ html, body {
 #map-canvas {
   clear: both;
   /*height: 100%;*/
-  height: 800px;
+  height: 840px;
   width: 100%;
   z-index: 0;
   /*min-height: 100%;*/
