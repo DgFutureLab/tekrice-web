@@ -1,84 +1,79 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-  <!--<meta http-equiv="Refresh" content="5">-->
     <link rel="stylesheet" type="text/css" href="/bootstrap.min.css" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="/node.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="navbar navbar-default">
+
+    <nav class="navbar navbar-default">
+      <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="/"><img src="/techrice-logo2-10.png" /></a>
+          <a href="/"><img src="/techrice-logo2-10-small.png" /></a>
         </div>
-        <div class="navbar-collapse collapse navbar-inverse-collapse">
+        <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/map/<%= site %>"><i class="fa fa-map-marker"></i>&nbsp; 地図</a></li>
-            <li><a href="/list/<%= site %>"><i class="fa fa-file-text-o"></i>&nbsp; リスト</a></li>
+            <li><a href="#farmersmile">TechRiceとは?</a></li>
+            <li><a href="#maplink">マップ</a></li>
+            <li><a href="#features">サービス</a></li>
+            <li><a href="#contact">コンタクト</a></li>
           </ul>
         </div>
       </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h1 class="text-center">Node detail | <%= id %></h1>
-          <hr />
-        </div>
-      </div>
+    </nav>
 
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-12" style="height:572px;">
-                  <h2 id="temp"><img src="/temp.png" />&nbsp;<%= temp %> &deg;C</h2>
-                  <h2 id="humid"><img src="/water.png" />&nbsp;<%= humid %> %</h2>
-                  <h2 id="wind"><img src="/wind.png" />&nbsp;2 m/s</h2>
-                  <img id="rice_pic" src="/sadrice.jpg" />
-                  <h2 id="height"><%= dist %> cm</h2>
-                  <img id="height_pic" src="/height.png" />
+        <div class="col-sm-3 col-md-2 sidebar">
+          <h3>設置したセンサー</h3>
+          <br />
+          <ul>
+            <li><a href="/map/hackerfarm">Hacker Farm</a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+              <ul>
+                <li><a href="#">Sensor1</a></li>
+                <li><a href="#">Sensor2</a></li>
+                <li><a href="#">Sensor3</a></li>
+              </ul>
+            <li><a href="/map/DG">Digital Garage</a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+            <li><a href="/map/Kamakura">Kamakura</a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class=container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">水位データ</h3>
+                  </div>
+                  <div class="panel-body">
+                    <svg class="distance"></svg>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">湿度データ</h3>
+                  </div>
+                  <div class="panel-body">
+                    <svg class="moisture"></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">温度データ</h3>
+                  </div>
+                  <div class="panel-body">
+                    <svg class="temp"></svg>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">水位データ</h3>
-            </div>
-            <div class="panel-body">
-              <svg class="distance"></svg>
-            </div>
-          </div>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">湿度データ</h3>
-            </div>
-            <div class="panel-body">
-              <svg class="moisture"></svg>
-            </div>
-          </div>
-          <!--
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">温度データ</h3>
-            </div>
-            <div class="panel-body">
-              <svg class="temp"></svg>
-            </div>
-          </div>
-          -->
         </div>
       </div>
     </div>
