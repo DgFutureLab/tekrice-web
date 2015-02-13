@@ -60,6 +60,10 @@ get '/settings' do
   erb :settings, locals:{ site:"hackerfarm" }
 end
 
+get '/testimonials' do
+  erb :testimonials
+end
+
 get '/map/:site' do
   #if params[:site] != 'hackerfarm' || params[:site] != 'tokyo' || params[:site] != 'Kamakura'
   #  redirect '/map/hackerfarm'

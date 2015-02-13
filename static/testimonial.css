@@ -1,0 +1,8 @@
+#testimonials {
+	padding-bottom: 30px;
+	padding-top: 80px;
+}
+.textQuote {
+	background-image: url('/testimonialQuote.png');
+	background-size: 100% 100%;
+}
