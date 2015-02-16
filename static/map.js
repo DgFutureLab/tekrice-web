@@ -77,17 +77,17 @@ function setMarkers(map, markers) {
     var distance   = markers[i]["sensors"][1]["latest_reading"];
     var icon;
     if (parseFloat(distance) < 30) {
-      icon = '/redpin75.png';
+      icon = { url:'/redpin75.png', id:node["alias"].toString() };
     } else {
-      icon = '/greenpin75.png';
+      icon = { url:'/greenpin75.png', id:node["alias"].toString() };
     }
 
     var marker = new google.maps.Marker({
       position: nodeLatLng,
-      map: map,
+        map: map,
       title: node["alias"].toString(),
-      icon: icon,
-      html: contentString[i]
+       icon: icon,
+       html: contentString[i]
     });
 
     google.maps.event.addListener(marker, "click", function() {
