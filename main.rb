@@ -65,16 +65,34 @@ get '/testimonials' do
 end
 
 get '/map/:site' do
-  #if params[:site] != 'hackerfarm' || params[:site] != 'tokyo' || params[:site] != 'Kamakura'
-  #  redirect '/map/hackerfarm'
-  #end
+  site_list    = ["hackerfarm", "tokyo", "kamakura"]
+  #site_list   -= [params[:site]]
 
-  @all_data = get_data_for_site(params[:site])
+  if !(params[:site] == 'hackerfarm' || params[:site] == 'tokyo' || params[:site] == 'kamakura')
+    redirect '/map/hackerfarm'
+  end
+
+  @site_data = get_data_for_site(params[:site])
 
   #TODO remove when real data is available
-  @all_data = make_up_dummy_data_for_dataset(@all_data)
+  @site_data = make_up_dummy_data_for_dataset(@all_data)
 
-  erb :map, locals:{ data:@all_data, site:params[:site] }
+  node_list   = Array.new
+  parsed_data = JSON.parse(@site_data)
+  parsed_data["objects"][0]["nodes"].each do |node|
+    node_list << node["alias"]
+  end
+
+  erb :map, locals:{ data:@all_data, site:params[:site], site_list:site_list, node_list:node_list }
+end
+
+
+get '/map' do
+  redirect '/map/hackerfarm'
+end
+
+get '/map/' do
+  redirect '/map/hackerfarm'
 end
 
 get '/list/:site' do
@@ -196,7 +214,7 @@ def get_data_for_site(site)
   cache_file   = File.join("cache", site)
   site_id_hash = {'hackerfarm' => 17, 'Kamakura' => 69, 'DG' => 70, 'tokyo' => 62,'webtest' => 63}
 
-  if site == 'hackerfarm' || site == 'Kamakura' || site == 'DG' || site == 'tokyo'
+  if site == 'hackerfarm' || site == 'kamakura' || site == 'DG' || site == 'tokyo'
 
     if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
       api_link = "http://128.199.191.249/site/" + site_id_hash[site].to_s

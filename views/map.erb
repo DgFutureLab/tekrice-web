@@ -23,10 +23,8 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#farmersmile">TechRiceとは?</a></li>
-            <li><a href="#maplink">マップ</a></li>
-            <li><a href="#features">サービス</a></li>
-            <li><a href="#contact">コンタクト</a></li>
+            <li><a href="/map"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;マップ</a></li>
+            <li><a href="mailto:futurelabdg@gmail.com"><i class="fa fa-envelope"></i>&nbsp;&nbsp;コンタクト</a></li>
           </ul>
         </div>
       </div>
@@ -38,14 +36,17 @@
           <h3>設置したセンサー</h3>
           <br />
           <ul>
-            <li><a href="/map/hackerfarm">Hacker Farm</a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+            <% site_list.each do |site_name| %>
+            <li><a href="/map/<%= site_name %>"><%= site_name %></a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+
+              <% if site_name == site %>
               <ul>
-                <li><a href="#">Sensor1</a></li>
-                <li><a href="#">Sensor2</a></li>
-                <li><a href="#">Sensor3</a></li>
+                <% node_list.each do |node| %>
+                <li><a href="#"><%= node %></a></li>
+                <% end %>
               </ul>
-            <li><a href="/map/DG">Digital Garage</a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
-            <li><a href="/map/Kamakura">Kamakura</a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+              <% end %>
+            <% end %>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main fill">
