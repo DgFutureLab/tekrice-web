@@ -73,9 +73,11 @@ get '/map/:site' do
   end
 
   @site_data = get_data_for_site(params[:site])
+  p JSON.parse(@site_data)
 
   #TODO remove when real data is available
   @site_data = make_up_dummy_data_for_dataset(@site_data)
+  p JSON.parse(@site_data)
 
   node_list   = Array.new
   parsed_data = JSON.parse(@site_data)
@@ -212,7 +214,7 @@ def get_data_for_site(site)
   }
 
   cache_file   = File.join("cache", site)
-  site_id_hash = {'hackerfarm' => 17, 'Kamakura' => 69, 'DG' => 70, 'tokyo' => 62,'webtest' => 63}
+  site_id_hash = {'hackerfarm' => 17, 'kamakura' => 69, 'DG' => 70, 'tokyo' => 62,'webtest' => 63}
 
   if site == 'hackerfarm' || site == 'kamakura' || site == 'DG' || site == 'tokyo'
 

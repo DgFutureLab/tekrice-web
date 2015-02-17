@@ -12,24 +12,46 @@
                     "longitude": 139.54978, 
                     "sensors": [
                         {
-                            "alias": "temperature", 
-                            "id": 50, 
-                            "latest_reading": null
-                        }, 
-                        {
                             "alias": "distance", 
                             "id": 51, 
-                            "latest_reading": null
-                        }, 
-                        {
-                            "alias": "humidity", 
-                            "id": 52, 
                             "latest_reading": null
                         }, 
                         {
                             "alias": "vbat", 
                             "id": 53, 
                             "latest_reading": null
+                        }, 
+                        {
+                            "alias": "temperature", 
+                            "id": 50, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "temperature", 
+                                        "id": "50"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-02-17-03:53:59:206718", 
+                                "value": 29.0
+                            }
+                        }, 
+                        {
+                            "alias": "humidity", 
+                            "id": 52, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "humidity", 
+                                        "id": "52"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-02-17-03:53:59:207643", 
+                                "value": 33.0
+                            }
                         }
                     ]
                 }, 
