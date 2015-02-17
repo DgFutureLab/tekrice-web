@@ -75,7 +75,7 @@ get '/map/:site' do
   @site_data = get_data_for_site(params[:site])
 
   #TODO remove when real data is available
-  @site_data = make_up_dummy_data_for_dataset(@all_data)
+  @site_data = make_up_dummy_data_for_dataset(@site_data)
 
   node_list   = Array.new
   parsed_data = JSON.parse(@site_data)
@@ -83,7 +83,7 @@ get '/map/:site' do
     node_list << node["alias"]
   end
 
-  erb :map, locals:{ data:@all_data, site:params[:site], site_list:site_list, node_list:node_list }
+  erb :map, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
 end
 
 
