@@ -12,32 +12,19 @@ get '/' do
   erb :main
 end
 
-get '/dashboard' do
-  # Old no data object
-  #no_data = {"objects" => [{"value" => "N/A"}]}
-
-  @all_data = get_data_for_site('hackerfarm')
-
-  erb :dashboard, locals:{ data:JSON.parse(@all_data), json_data:@all_data }
-
-  # NOTE so I don't forget the different API call response
-  #test2 = Net::HTTP.get_response(URI.parse("http://128.199.191.249/reading/node_XX/distance&date_range=1week"))
-  #erb :dashboard, locals:{ dist:@dist["objects"][0]["value"], humid:@humid["objects"][0]["value"], temp:@temp["objects"][0]["value"] }
-end
-
-get '/dashboard/nodes' do
-  erb :nodes
-end
-
 get '/node/:site/:uuid' do
-  @all_data = get_data_for_site(params[:site])
+  site_list  = ["hackerfarm", "tokyo", "kamakura"]
+
+  @site_data = get_data_for_site(params[:site])
 
   #TODO remove when real data is available
-  @all_data = make_up_dummy_data_for_dataset(@all_data)
+  @site_data = make_up_dummy_data_for_dataset(@site_data)
 
-  @all_data = JSON.parse(@all_data)
+  node_list = get_node_list(@site_data)
 
-  @all_data["objects"][0]["nodes"].each do |node|
+  @site_data = JSON.parse(@site_data)
+
+  @site_data["objects"][0]["nodes"].each do |node|
     if node["alias"] == params[:uuid]
       node["sensors"].each do |x|
         if x["alias"] == 'humidity'
@@ -53,15 +40,7 @@ get '/node/:site/:uuid' do
     end
   end
 
-  erb :nodedetail, locals:{ id:params[:uuid], dist:@dist, humid:@humid, temp:@temp, site:params[:site] }
-end
-
-get '/settings' do
-  erb :settings, locals:{ site:"hackerfarm" }
-end
-
-get '/testimonials' do
-  erb :testimonials
+  erb :nodedetail, locals:{ id:params[:uuid], dist:@dist, humid:@humid, temp:@temp, site:params[:site], site_list:site_list, node_list:node_list }
 end
 
 get '/map/:site' do
@@ -77,15 +56,10 @@ get '/map/:site' do
   #TODO remove when real data is available
   @site_data = make_up_dummy_data_for_dataset(@site_data)
 
-  node_list   = Array.new
-  parsed_data = JSON.parse(@site_data)
-  parsed_data["objects"][0]["nodes"].each do |node|
-    node_list << node["alias"]
-  end
+  node_list  = get_node_list(@site_data)
 
   erb :map, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
 end
-
 
 get '/map' do
   redirect '/map/hackerfarm'
@@ -104,11 +78,42 @@ get '/list/:site' do
   erb :list, locals:{ data:JSON.parse(@all_data), json_data:@all_data, site:params[:site] }
 end
 
+# UNUSED ROUTES
+
+get '/dashboard' do
+  # Old no data object
+  #no_data = {"objects" => [{"value" => "N/A"}]}
+
+  @all_data = get_data_for_site('hackerfarm')
+
+  erb :dashboard, locals:{ data:JSON.parse(@all_data), json_data:@all_data }
+
+  # NOTE so I don't forget the different API call response
+  #test2 = Net::HTTP.get_response(URI.parse("http://128.199.191.249/reading/node_XX/distance&date_range=1week"))
+  #erb :dashboard, locals:{ dist:@dist["objects"][0]["value"], humid:@humid["objects"][0]["value"], temp:@temp["objects"][0]["value"] }
+end
+
+get '/dashboard/nodes' do
+  erb :nodes
+end
+
+get '/settings' do
+  erb :settings, locals:{ site:"hackerfarm" }
+end
+
+get '/testimonials' do
+  erb :testimonials
+end
+
+# HELPERS
+
 helpers do
   def partial template
     erb template, layout:false
   end
 end
+
+# PRIVATE REPEATABLE FUNCTIONS
 
 private
 
@@ -254,4 +259,14 @@ def make_up_dummy_data_for_dataset(data)
   end
 
   return parsed_data.to_json
+end
+
+def get_node_list(data)
+  node_list   = Array.new
+  parsed_data = JSON.parse(data)
+  parsed_data["objects"][0]["nodes"].each do |node|
+    node_list << node["alias"]
+  end
+
+  return node_list
 end
