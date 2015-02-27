@@ -25,6 +25,7 @@
 
     <div class="container-fluid">
       <div class="row">
+
         <div class="col-sm-3 col-md-2 sidebar">
           <h3>設置したセンサー</h3>
           <br />
@@ -41,7 +42,8 @@
               <% end %>
             <% end %>
           </ul>
-        </div>
+        </div><!-- Sidebar -->
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class=container">
             <div class="row">
@@ -75,9 +77,10 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div><!-- Main -->
+
+      </div><!-- Row -->
+    </div><!-- Container -->
     <script type="text/javascript">
       window.data = {"dist":<%= dist %> ,"humid":<%= humid %> ,"temp":<%= temp %>};
     </script>
