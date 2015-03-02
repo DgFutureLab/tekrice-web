@@ -102,10 +102,15 @@ body {
   padding-bottom: 30px;
   width: 100%;
   background-color: #EFEFEF;
+  color: #2C3E50;
 }
 
 #contact > div > a {
   color: #000;
+}
+
+#contact > div > div > a {
+  color: #2C3E50;
 }
 
 /* Padding for spacing */
