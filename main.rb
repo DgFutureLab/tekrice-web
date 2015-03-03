@@ -222,7 +222,8 @@ def get_data_for_site(site)
   if site == 'hackerfarm' || site == 'kamakura' || site == 'DG' || site == 'tokyo'
 
     if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-      api_link = "http://128.199.191.249/site/" + site_id_hash[site].to_s
+      #api_link = "http://128.199.191.249/site/" + site_id_hash[site].to_s
+      api_link = "http://satoyamacloud.com/site/" + site_id_hash[site].to_s
       all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
       # Inserts new data into cache file
