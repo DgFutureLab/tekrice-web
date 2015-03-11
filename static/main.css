@@ -136,6 +136,14 @@ body {
   color: #2C3E50;
 }
 
+#footer {
+  background-color: black;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  width: 100%;
+  color: white;
+}
+
 /* Padding for spacing */
 .inner {
   padding: 30px;
