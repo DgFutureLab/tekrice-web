@@ -12,8 +12,13 @@ get '/' do
   erb :main
 end
 
-get '/node/:site/:uuid' do
-  site_list  = ["hackerfarm", "tokyo", "kamakura"]
+get '/node/:site/:uuid/:sensor' do
+  site_list   = [ "hackerfarm", "tokyo", "kamakura" ]
+  sensor_list = [ "distance", "temperature", "humidity" ]
+
+  if !sensor_list.include? params[:sensor]
+    redirect '/node/' + params[:site] + '/' + params[:uuid]
+  end
 
   @site_data = get_data_for_site(params[:site])
 
@@ -40,7 +45,54 @@ get '/node/:site/:uuid' do
     end
   end
 
-  erb :nodedetail, locals:{ id:params[:uuid], dist:@dist, humid:@humid, temp:@temp, site:params[:site], site_list:site_list, node_list:node_list }
+  erb :sensordetail, locals:{
+    id:params[:uuid],
+    dist:@dist,
+    humid:@humid,
+    temp:@temp,
+    site:params[:site],
+    site_list:site_list,
+    node_list:node_list
+  }
+end
+
+get '/node/:site/:uuid' do
+  site_list  = [ "hackerfarm", "tokyo", "kamakura" ]
+
+  @site_data = get_data_for_site(params[:site])
+
+  #TODO remove when real data is available
+  @site_data = make_up_dummy_data_for_dataset(@site_data)
+
+  node_list = get_node_list(@site_data)
+
+  @site_data = JSON.parse(@site_data)
+
+  @site_data["objects"][0]["nodes"].each do |node|
+    if node["alias"] == params[:uuid]
+      node["sensors"].each do |x|
+        if x["alias"] == 'humidity'
+          @humid = x["latest_reading"]
+        end
+        if x["alias"] == 'distance'
+          @dist  = x["latest_reading"]
+        end
+        if x["alias"] == 'temperature'
+          @temp  = x["latest_reading"]
+        end
+      end
+    end
+  end
+
+  erb :nodedetail, locals:{
+    id:params[:uuid],
+    dist:@dist,
+    humid:@humid,
+    temp:@temp,
+    site:params[:site],
+    site_list:site_list,
+    node_list:node_list
+  }
 end
 
 get '/map/:site' do
