@@ -14,7 +14,7 @@ end
 
 get '/node/:site/:uuid/:sensor' do
   site_list   = [ "hackerfarm", "tokyo", "kamakura" ]
-  sensor_list = [ "distance", "temperature", "humidity" ]
+  sensor_list = [ "温度", "水位", "湿度" ]
 
   if !sensor_list.include? params[:sensor]
     redirect '/node/' + params[:site] + '/' + params[:uuid]
@@ -28,6 +28,16 @@ get '/node/:site/:uuid/:sensor' do
   node_list = get_node_list(@site_data)
 
   @site_data = JSON.parse(@site_data)
+
+  dataset = [
+    { "index"=>"0", "value"=>"40", "day"=>"月" },
+    { "index"=>"1", "value"=>"30", "day"=>"火" },
+    { "index"=>"2", "value"=>"50", "day"=>"水" },
+    { "index"=>"3", "value"=>"49", "day"=>"木" },
+    { "index"=>"4", "value"=>"45", "day"=>"金" },
+    { "index"=>"5", "value"=>"60", "day"=>"土" },
+    { "index"=>"6", "value"=>"55", "day"=>"日" }
+  ]
 
   @site_data["objects"][0]["nodes"].each do |node|
     if node["alias"] == params[:uuid]
@@ -47,17 +57,18 @@ get '/node/:site/:uuid/:sensor' do
 
   erb :sensordetail, locals:{
     id:params[:uuid],
-    dist:@dist,
-    humid:@humid,
-    temp:@temp,
+    sensor:params[:sensor],
+    dataset:dataset.to_json,
     site:params[:site],
     site_list:site_list,
-    node_list:node_list
+    node_list:node_list,
+    sensor_list:sensor_list
   }
 end
 
 get '/node/:site/:uuid' do
-  site_list  = [ "hackerfarm", "tokyo", "kamakura" ]
+  site_list   = [ "hackerfarm", "tokyo", "kamakura" ]
+  sensor_list = [ "温度", "水位", "湿度" ]
 
   @site_data = get_data_for_site(params[:site])
 
@@ -91,7 +102,8 @@ get '/node/:site/:uuid' do
     temp:@temp,
     site:params[:site],
     site_list:site_list,
-    node_list:node_list
+    node_list:node_list,
+    sensor_list:sensor_list
   }
 end
 

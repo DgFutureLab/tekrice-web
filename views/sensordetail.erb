@@ -47,31 +47,25 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class=container">
             <div class="row">
+              <% sensor_list.each do |s| %>
+                <% if sensor == s %>
+                <a href="<%= "/node/"+site+"/"+id+"/"+s %>" class="btn btn-info disabled"><%= s %></a>&nbsp;&nbsp;
+                <% else %>
+                <a href="<%= "/node/"+site+"/"+id+"/"+s %>" class="btn btn-info"><%= s %></a>&nbsp;&nbsp;
+                <% end %>
+              <% end %>
+            </div>
+            <br />
+            <br />
+            <div class="row">
               <div class="col-md-6">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">水位データ</h3>
+                    <h3 class="panel-title"><%= sensor %>データ</h3>
                   </div>
                   <div class="panel-body">
-                    <svg class="distance"></svg>
-                  </div>
-                </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">湿度データ</h3>
-                  </div>
-                  <div class="panel-body">
-                    <svg class="moisture"></svg>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">温度データ</h3>
-                  </div>
-                  <div class="panel-body">
-                    <svg class="temp"></svg>
+                    <div id="graph">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -82,12 +76,9 @@
       </div><!-- Row -->
     </div><!-- Container -->
     <script type="text/javascript">
-      window.data = {"dist":<%= dist %> ,"humid":<%= humid %> ,"temp":<%= temp %>};
+      window.data = <%= dataset %>;
     </script>
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/node.js"></script>
-    <script type="text/javascript" src="/dist.js"></script>
-    <script type="text/javascript" src="/temp.js"></script>
-    <script type="text/javascript" src="/humid.js"></script>
+    <script type="text/javascript" src="/data.js"></script>
   </body>
 </html>

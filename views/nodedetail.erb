@@ -47,34 +47,9 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class=container">
             <div class="row">
-              <div class="col-md-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">水位データ</h3>
-                  </div>
-                  <div class="panel-body">
-                    <svg class="distance"></svg>
-                  </div>
-                </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">湿度データ</h3>
-                  </div>
-                  <div class="panel-body">
-                    <svg class="moisture"></svg>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">温度データ</h3>
-                  </div>
-                  <div class="panel-body">
-                    <svg class="temp"></svg>
-                  </div>
-                </div>
-              </div>
+              <% sensor_list.each do |sensor| %>
+                <a href="<%= "/node/"+site+"/"+id+"/"+sensor %>" class="btn btn-info"><%= sensor %></a>&nbsp;&nbsp;
+              <% end %>
             </div>
           </div>
         </div><!-- Main -->
@@ -84,10 +59,5 @@
     <script type="text/javascript">
       window.data = {"dist":<%= dist %> ,"humid":<%= humid %> ,"temp":<%= temp %>};
     </script>
-    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="/node.js"></script>
-    <script type="text/javascript" src="/dist.js"></script>
-    <script type="text/javascript" src="/temp.js"></script>
-    <script type="text/javascript" src="/humid.js"></script>
   </body>
 </html>
