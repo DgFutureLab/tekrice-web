@@ -15,6 +15,7 @@ end
 get '/node/:site/:uuid/:sensor' do
   site_list   = [ "hackerfarm", "tokyo", "kamakura" ]
   sensor_list = [ "温度", "水位", "湿度" ]
+  sensor_unit = { "温度" => "&deg;C", "水位" => "cm", "湿度" => "%" }
 
   if !sensor_list.include? params[:sensor]
     redirect '/node/' + params[:site] + '/' + params[:uuid]
@@ -58,6 +59,7 @@ get '/node/:site/:uuid/:sensor' do
   erb :sensordetail, locals:{
     id:params[:uuid],
     sensor:params[:sensor],
+    sensor_unit:sensor_unit[params[:sensor]],
     dataset:dataset.to_json,
     site:params[:site],
     site_list:site_list,

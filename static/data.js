@@ -1,4 +1,4 @@
-var w = 500;
+var w = 600;
 var h = 300;
 var padding = 30;
 
@@ -50,7 +50,21 @@ svg.append("g")
    .attr("cy", function(d) {
      return yScale(d.value);
    })
-   .attr("r", 2);
+   .attr("r", 5)
+   .on("mouseover", function(d) {
+     var xPosition = parseFloat( d3.select(this).attr("x") ) / 2 + w / 2;
+     var yPosition = parseFloat( d3.select(this).attr("y") ) / 2 + h / 2;
+
+     d3.select("#infobox")
+       .style("left", xPosition + "px")
+       .style("top", yPosition + "px")
+       .select("#value")
+       .text(d.value);
+     d3.select("#infobox").classed("hidden", false);
+   })
+   .on("mouseout", function(d) {
+     d3.select("#infobox").classed("hidden", true);
+   });
 
 svg.append("g")
    .attr("class", "axis")
