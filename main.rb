@@ -319,8 +319,13 @@ end
 def get_node_list(data)
   node_list   = Array.new
   parsed_data = JSON.parse(data)
-  parsed_data["objects"][0]["nodes"].each do |node|
-    node_list << node["alias"]
+  null_alias  = parsed_data["objects"][0]["alias"].downcase.gsub(" ", "")
+  parsed_data["objects"][0]["nodes"].each_with_index do |node, index|
+    if (node["alias"]) 
+      node_list << node["alias"]
+    else
+      node_list << (null_alias + index.to_s)
+    end
   end
 
   return node_list

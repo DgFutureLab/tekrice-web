@@ -7,13 +7,6 @@
             "nodes": [
                 {
                     "alias": null, 
-                    "id": 35, 
-                    "latitude": 35.646293, 
-                    "longitude": 139.703919, 
-                    "sensors": []
-                }, 
-                {
-                    "alias": null, 
                     "id": 36, 
                     "latitude": 35.646293, 
                     "longitude": 139.703919, 

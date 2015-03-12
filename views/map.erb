@@ -43,7 +43,7 @@
               <% if site_name == site %>
               <ul>
                 <% node_list.each do |node| %>
-                  <li><a href="#" class="node_link"><%= node %></a></li>
+                  <li><a href="/node/<%= site_name %>/<%= node %>" class="node_link"><%= node %></a></li>
                 <% end %>
               </ul>
               <% end %>

@@ -18,6 +18,12 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     riceimage = '<img src="/happyrice25.jpg"/>';
   }
   // Pop-up info
+  var alias;
+  if (window.data["objects"][0]["nodes"][i]["alias"]) {
+    alias = window.data["objects"][0]["nodes"][i]["alias"];
+  } else{
+    alias = window.nodesite + parseInt(i);
+  }
   contentString[i] = '<div class="content">'
     + '<div class="ricepic">'
     + riceimage
@@ -38,7 +44,7 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     + '<a href="/node/'
     + window.nodesite
     + '/'
-    + window.data["objects"][0]["nodes"][i]["alias"]
+    + alias
     + '">Node Link</a>'
     + '</div>'
     + '</div>';
@@ -76,16 +82,24 @@ function setMarkers(map, markers) {
     var nodeLatLng = new google.maps.LatLng(node["latitude"], node["longitude"]);
     var distance   = markers[i]["sensors"][1]["latest_reading"];
     var icon;
-    if (parseFloat(distance) < 30) {
-      icon = { url:'/redpin75.png', id:node["alias"].toString() };
+    var alias;
+
+    if (node["alias"]) {
+      alias = node["alias"].toString();
     } else {
-      icon = { url:'/greenpin75.png', id:node["alias"].toString() };
+      alias = window.nodesite + parseInt(i);
+    }
+
+    if (parseFloat(distance) < 30) {
+      icon = { url:'/redpin75.png', id:alias };
+    } else {
+      icon = { url:'/greenpin75.png', id:alias };
     }
 
     var marker = new google.maps.Marker({
       position: nodeLatLng,
         map: map,
-      title: node["alias"].toString(),
+      title: alias,
        icon: icon,
        html: contentString[i]
     });
