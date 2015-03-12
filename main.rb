@@ -13,7 +13,7 @@ get '/' do
 end
 
 get '/node/:site/:uuid/:sensor' do
-  site_list   = [ "hackerfarm", "digitalgarage", "kamakura" ]
+  site_list   = get_site_list.keys
   sensor_list = [ "温度", "水位", "湿度" ]
   sensor_unit = { "温度" => "&deg;C", "水位" => "cm", "湿度" => "%" }
 
@@ -71,7 +71,7 @@ get '/node/:site/:uuid/:sensor' do
 end
 
 get '/node/:site/:uuid' do
-  site_list   = [ "hackerfarm", "digitalgarage", "kamakura" ]
+  site_list   = get_site_list.keys
   sensor_list = [ "温度", "水位", "湿度" ]
 
   @site_data = get_data_for_site(params[:site])
@@ -112,11 +112,10 @@ get '/node/:site/:uuid' do
 end
 
 get '/map/:site' do
-  site_list    = ["hackerfarm", "digitalgarage", "kamakura"]
-  #site_list   -= [params[:site]]
+  site_list = get_site_list.keys
 
-  if !(params[:site] == 'hackerfarm' || params[:site] == 'digitalgarage' || params[:site] == 'kamakura')
-    redirect '/map/hackerfarm'
+  if !(site_list.include?(params[:site]))
+    redirect '/map/' + site_list[0]
   end
 
   @site_data = get_data_for_site(params[:site])
@@ -130,11 +129,13 @@ get '/map/:site' do
 end
 
 get '/map' do
-  redirect '/map/hackerfarm'
+  site_list = get_site_list.keys
+  redirect '/map/' + site_list[0]
 end
 
 get '/map/' do
-  redirect '/map/hackerfarm'
+  site_list = get_site_list.keys
+  redirect '/map/' + site_list[0]
 end
 
 get '/list/:site' do
@@ -278,32 +279,25 @@ def get_data_for_site(site)
   }
 
   cache_file   = File.join("cache", site)
-  site_id_hash = {'hackerfarm' => 80, 'kamakura' => 82, 'digitalgarage' => 81}
+  site_id_hash = get_site_list
 
-  if site == 'hackerfarm' || site == 'kamakura' || site == 'digitalgarage'
+  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
+    api_link = "http://satoyamacloud.com/site/" + site_id_hash[site].to_s
+    all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
-    if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-      api_link = "http://satoyamacloud.com/site/" + site_id_hash[site].to_s
-      all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
-
-      # Inserts new data into cache file
-      if all_data_call.code == "200"
-        @all_data = all_data_call.body
-        File.open(cache_file, "w"){ |f| f << @all_data }
-      else
-        if File.exist?(cache_file)
-          @all_data = File.read(cache_file)
-        else
-          @all_data = test_data
-        end
-      end
+    # Inserts new data into cache file
+    if all_data_call.code == "200"
+      @all_data = all_data_call.body
+      File.open(cache_file, "w"){ |f| f << @all_data }
     else
-      @all_data = File.read(cache_file)
+      if File.exist?(cache_file)
+        @all_data = File.read(cache_file)
+      else
+        @all_data = test_data
+      end
     end
-
-  # TODO placeholder for other sites
   else
-    @all_data = test_data
+    @all_data = File.read(cache_file)
   end
 
   return @all_data
@@ -330,4 +324,23 @@ def get_node_list(data)
   end
 
   return node_list
+end
+
+def get_site_list
+  site_hash = {}
+
+  api_link = "http://satoyamacloud.com/sites"
+  all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
+
+  if all_data_call.code == "200"
+    all_data = JSON.parse(all_data_call.body)
+    all_data["objects"].each do |site|
+      site_hash[ site["alias"].downcase.gsub(" ", "") ] = site["id"]
+    end
+  else
+    #TODO This is pretty useless & volatile
+    site_hash = {'hackerfarm' => 80, 'kamakura' => 82, 'digitalgarage' => 81}
+  end
+
+  return site_hash
 end
