@@ -13,7 +13,7 @@ get '/' do
 end
 
 get '/node/:site/:uuid/:sensor' do
-  site_list   = [ "hackerfarm", "tokyo", "kamakura" ]
+  site_list   = [ "hackerfarm", "digitalgarage", "kamakura" ]
   sensor_list = [ "温度", "水位", "湿度" ]
   sensor_unit = { "温度" => "&deg;C", "水位" => "cm", "湿度" => "%" }
 
@@ -30,14 +30,16 @@ get '/node/:site/:uuid/:sensor' do
 
   @site_data = JSON.parse(@site_data)
 
+  #TODO Remove fake data
+  rand = Random.new
   dataset = [
-    { "index"=>"0", "value"=>"40", "day"=>"月" },
-    { "index"=>"1", "value"=>"30", "day"=>"火" },
-    { "index"=>"2", "value"=>"50", "day"=>"水" },
-    { "index"=>"3", "value"=>"49", "day"=>"木" },
-    { "index"=>"4", "value"=>"45", "day"=>"金" },
-    { "index"=>"5", "value"=>"60", "day"=>"土" },
-    { "index"=>"6", "value"=>"55", "day"=>"日" }
+    { "index"=>"0", "value"=>rand(15...90).to_s, "day"=>"月" },
+    { "index"=>"1", "value"=>rand(15...90).to_s, "day"=>"火" },
+    { "index"=>"2", "value"=>rand(15...90).to_s, "day"=>"水" },
+    { "index"=>"3", "value"=>rand(15...90).to_s, "day"=>"木" },
+    { "index"=>"4", "value"=>rand(15...90).to_s, "day"=>"金" },
+    { "index"=>"5", "value"=>rand(15...90).to_s, "day"=>"土" },
+    { "index"=>"6", "value"=>rand(15...90).to_s, "day"=>"日" }
   ]
 
   @site_data["objects"][0]["nodes"].each do |node|
@@ -69,7 +71,7 @@ get '/node/:site/:uuid/:sensor' do
 end
 
 get '/node/:site/:uuid' do
-  site_list   = [ "hackerfarm", "tokyo", "kamakura" ]
+  site_list   = [ "hackerfarm", "digitalgarage", "kamakura" ]
   sensor_list = [ "温度", "水位", "湿度" ]
 
   @site_data = get_data_for_site(params[:site])
@@ -110,10 +112,10 @@ get '/node/:site/:uuid' do
 end
 
 get '/map/:site' do
-  site_list    = ["hackerfarm", "tokyo", "kamakura"]
+  site_list    = ["hackerfarm", "digitalgarage", "kamakura"]
   #site_list   -= [params[:site]]
 
-  if !(params[:site] == 'hackerfarm' || params[:site] == 'tokyo' || params[:site] == 'kamakura')
+  if !(params[:site] == 'hackerfarm' || params[:site] == 'digitalgarage' || params[:site] == 'kamakura')
     redirect '/map/hackerfarm'
   end
 
@@ -147,16 +149,9 @@ end
 # UNUSED ROUTES
 
 get '/dashboard' do
-  # Old no data object
-  #no_data = {"objects" => [{"value" => "N/A"}]}
-
   @all_data = get_data_for_site('hackerfarm')
 
   erb :dashboard, locals:{ data:JSON.parse(@all_data), json_data:@all_data }
-
-  # NOTE so I don't forget the different API call response
-  #test2 = Net::HTTP.get_response(URI.parse("http://128.199.191.249/reading/node_XX/distance&date_range=1week"))
-  #erb :dashboard, locals:{ dist:@dist["objects"][0]["value"], humid:@humid["objects"][0]["value"], temp:@temp["objects"][0]["value"] }
 end
 
 get '/dashboard/nodes' do
@@ -283,12 +278,11 @@ def get_data_for_site(site)
   }
 
   cache_file   = File.join("cache", site)
-  site_id_hash = {'hackerfarm' => 17, 'kamakura' => 69, 'DG' => 70, 'tokyo' => 62,'webtest' => 63}
+  site_id_hash = {'hackerfarm' => 80, 'kamakura' => 82, 'digitalgarage' => 81}
 
-  if site == 'hackerfarm' || site == 'kamakura' || site == 'DG' || site == 'tokyo'
+  if site == 'hackerfarm' || site == 'kamakura' || site == 'digitalgarage'
 
     if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-      #api_link = "http://128.199.191.249/site/" + site_id_hash[site].to_s
       api_link = "http://satoyamacloud.com/site/" + site_id_hash[site].to_s
       all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
