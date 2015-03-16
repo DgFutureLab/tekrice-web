@@ -76,6 +76,78 @@
                             }
                         }
                     ]
+                }, 
+                {
+                    "alias": "rice field 2", 
+                    "id": 44, 
+                    "latitude": 35.143868, 
+                    "longitude": 139.988215, 
+                    "sensors": [
+                        {
+                            "alias": "ambient temperature", 
+                            "id": 152, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "ambient temperature", 
+                                        "id": "152"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-04:28:57:363798", 
+                                "value": 0.6074011145502625
+                            }
+                        }, 
+                        {
+                            "alias": "battery_voltage", 
+                            "id": 150, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "battery_voltage", 
+                                        "id": "150"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-04:28:57:291815", 
+                                "value": 0.3361190116866215
+                            }
+                        }, 
+                        {
+                            "alias": "air humidity", 
+                            "id": 153, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "air humidity", 
+                                        "id": "153"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-04:28:57:395179", 
+                                "value": 0.7505252334812997
+                            }
+                        }, 
+                        {
+                            "alias": "water_level", 
+                            "id": 151, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "water_level", 
+                                        "id": "151"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-04:28:57:328009", 
+                                "value": 0.9377433220640085
+                            }
+                        }
+                    ]
                 }
             ]
         }

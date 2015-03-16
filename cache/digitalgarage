@@ -3,89 +3,221 @@
     "objects": [
         {
             "alias": "Digital Garage", 
-            "id": 81, 
+            "id": 86, 
             "nodes": [
                 {
-                    "alias": null, 
-                    "id": 36, 
+                    "alias": "garage 1", 
+                    "id": 45, 
                     "latitude": 35.646293, 
                     "longitude": 139.703919, 
                     "sensors": [
                         {
-                            "alias": "battery_voltage", 
-                            "id": 118, 
-                            "latest_reading": null
-                        }, 
-                        {
                             "alias": "water_level", 
-                            "id": 119, 
-                            "latest_reading": null
+                            "id": 155, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "water_level", 
+                                        "id": "155"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:07:19:838181", 
+                                "value": 0.7907651321477948
+                            }
                         }, 
                         {
                             "alias": "ambient temperature", 
-                            "id": 120, 
-                            "latest_reading": null
+                            "id": 156, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "ambient temperature", 
+                                        "id": "156"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:07:19:881501", 
+                                "value": 0.6760207471738655
+                            }
+                        }, 
+                        {
+                            "alias": "battery_voltage", 
+                            "id": 154, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "battery_voltage", 
+                                        "id": "154"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:07:19:792796", 
+                                "value": 0.246850050823058
+                            }
                         }, 
                         {
                             "alias": "air humidity", 
-                            "id": 121, 
-                            "latest_reading": null
+                            "id": 157, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "air humidity", 
+                                        "id": "157"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:07:19:911348", 
+                                "value": 0.04861555287959807
+                            }
                         }
                     ]
                 }, 
                 {
-                    "alias": null, 
-                    "id": 37, 
+                    "alias": "garage 2", 
+                    "id": 46, 
                     "latitude": 35.646318, 
                     "longitude": 139.703678, 
                     "sensors": [
                         {
-                            "alias": "battery_voltage", 
-                            "id": 122, 
-                            "latest_reading": null
-                        }, 
-                        {
-                            "alias": "water_level", 
-                            "id": 123, 
-                            "latest_reading": null
-                        }, 
-                        {
                             "alias": "ambient temperature", 
-                            "id": 124, 
-                            "latest_reading": null
+                            "id": 160, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "ambient temperature", 
+                                        "id": "160"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:07:53:810716", 
+                                "value": 0.8861432932705358
+                            }
+                        }, 
+                        {
+                            "alias": "battery_voltage", 
+                            "id": 158, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "battery_voltage", 
+                                        "id": "158"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:07:53:750068", 
+                                "value": 0.847402930919207
+                            }
                         }, 
                         {
                             "alias": "air humidity", 
-                            "id": 125, 
-                            "latest_reading": null
+                            "id": 161, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "air humidity", 
+                                        "id": "161"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:07:53:841203", 
+                                "value": 0.1523856022524963
+                            }
+                        }, 
+                        {
+                            "alias": "water_level", 
+                            "id": 159, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "water_level", 
+                                        "id": "159"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:07:53:781575", 
+                                "value": 0.6353105877749107
+                            }
                         }
                     ]
                 }, 
                 {
-                    "alias": null, 
-                    "id": 38, 
+                    "alias": "garage 3", 
+                    "id": 47, 
                     "latitude": 35.645889, 
                     "longitude": 139.703809, 
                     "sensors": [
                         {
                             "alias": "battery_voltage", 
-                            "id": 126, 
-                            "latest_reading": null
-                        }, 
-                        {
-                            "alias": "water_level", 
-                            "id": 127, 
-                            "latest_reading": null
+                            "id": 162, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "battery_voltage", 
+                                        "id": "162"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:08:13:662110", 
+                                "value": 0.10793643296616295
+                            }
                         }, 
                         {
                             "alias": "ambient temperature", 
-                            "id": 128, 
-                            "latest_reading": null
+                            "id": 164, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "ambient temperature", 
+                                        "id": "164"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:08:13:731874", 
+                                "value": 0.10034096337042919
+                            }
+                        }, 
+                        {
+                            "alias": "water_level", 
+                            "id": 163, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "water_level", 
+                                        "id": "163"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:08:13:697576", 
+                                "value": 0.6610043772047316
+                            }
                         }, 
                         {
                             "alias": "air humidity", 
-                            "id": 129, 
-                            "latest_reading": null
+                            "id": 165, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "air humidity", 
+                                        "id": "165"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-03-12-14:08:13:765348", 
+                                "value": 0.8497847405165632
+                            }
                         }
                     ]
                 }

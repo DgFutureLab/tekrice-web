@@ -14,8 +14,15 @@ end
 
 get '/node/:site/:uuid/:sensor' do
   site_list   = get_site_list.keys
-  sensor_list = [ "温度", "水位", "湿度" ]
-  sensor_unit = { "温度" => "&deg;C", "水位" => "cm", "湿度" => "%" }
+  sensor_list = [ "温度", "水位", "湿度", "電池" ]
+  sensor_unit = { 
+    "温度" => "&deg;C", "水位" => "cm",
+    "湿度" => "%", "電池" => "%"
+  }
+  sensor_hash = { 
+    "温度" => "ambient temperature", "水位" => "water_level",
+    "湿度" => "air humidity", "電池" => "battery_voltage"
+  }
 
   if !sensor_list.include? params[:sensor]
     redirect '/node/' + params[:site] + '/' + params[:uuid]
@@ -30,6 +37,7 @@ get '/node/:site/:uuid/:sensor' do
 
   @site_data = JSON.parse(@site_data)
 
+=begin
   #TODO Remove fake data
   rand = Random.new
   dataset = [
@@ -41,18 +49,26 @@ get '/node/:site/:uuid/:sensor' do
     { "index"=>"5", "value"=>rand(15...90).to_s, "day"=>"土" },
     { "index"=>"6", "value"=>rand(15...90).to_s, "day"=>"日" }
   ]
+=end
+
+  dataset = [
+    { "index"=>"0", "day"=>"月" },
+    { "index"=>"1", "day"=>"火" },
+    { "index"=>"2", "day"=>"水" },
+    { "index"=>"3", "day"=>"木" },
+    { "index"=>"4", "day"=>"金" },
+    { "index"=>"5", "day"=>"土" },
+    { "index"=>"6", "day"=>"日" }
+  ]
 
   @site_data["objects"][0]["nodes"].each do |node|
     if node["alias"] == params[:uuid]
       node["sensors"].each do |x|
-        if x["alias"] == 'humidity'
-          @humid = x["latest_reading"]
-        end
-        if x["alias"] == 'distance'
-          @dist  = x["latest_reading"]
-        end
-        if x["alias"] == 'temperature'
-          @temp  = x["latest_reading"]
+        if x["alias"] == sensor_hash[ params[:sensor] ]
+          @node_data = get_reading_for_node( x["id"] )
+          @node_data.each_with_index do |value, i|
+            dataset[i]["value"] = value
+          end
         end
       end
     end
@@ -66,13 +82,14 @@ get '/node/:site/:uuid/:sensor' do
     site:params[:site],
     site_list:site_list,
     node_list:node_list,
-    sensor_list:sensor_list
+    sensor_list:sensor_list,
+    node_data:@node_data
   }
 end
 
 get '/node/:site/:uuid' do
   site_list   = get_site_list.keys
-  sensor_list = [ "温度", "水位", "湿度" ]
+  sensor_list = [ "温度", "水位", "湿度", "電池" ]
 
   @site_data = get_data_for_site(params[:site])
 
@@ -348,4 +365,23 @@ def get_site_list
   end
 
   return site_hash
+end
+
+def get_reading_for_node(node_id)
+  api_link = "http://satoyamacloud.com/readings?sensor_id=" + node_id.to_s
+  all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
+
+  if all_data_call.code == "200"
+    all_data = JSON.parse(all_data_call.body)
+    sensor_alias = all_data["objects"][0]["sensor"][0]["alias"]
+    value = []
+
+    all_data["objects"].each do |reading|
+      value << reading["value"]
+    end
+  else
+    #TODO
+  end
+
+  return value
 end
