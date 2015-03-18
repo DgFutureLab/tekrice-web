@@ -4,10 +4,6 @@ require 'net/http'
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 
-use Rack::Auth::Basic, "Restricted Area" do |username, password|
-  username == 'techrice' and password == 'tacobeya12'
-end
-
 get '/' do
   erb :main
 end
@@ -36,20 +32,6 @@ get '/node/:site/:uuid/:sensor' do
   node_list = get_node_list(@site_data)
 
   @site_data = JSON.parse(@site_data)
-
-=begin
-  #TODO Remove fake data
-  rand = Random.new
-  dataset = [
-    { "index"=>"0", "value"=>rand(15...90).to_s, "day"=>"月" },
-    { "index"=>"1", "value"=>rand(15...90).to_s, "day"=>"火" },
-    { "index"=>"2", "value"=>rand(15...90).to_s, "day"=>"水" },
-    { "index"=>"3", "value"=>rand(15...90).to_s, "day"=>"木" },
-    { "index"=>"4", "value"=>rand(15...90).to_s, "day"=>"金" },
-    { "index"=>"5", "value"=>rand(15...90).to_s, "day"=>"土" },
-    { "index"=>"6", "value"=>rand(15...90).to_s, "day"=>"日" }
-  ]
-=end
 
   dataset = [
     { "index"=>"0", "day"=>"月" },
