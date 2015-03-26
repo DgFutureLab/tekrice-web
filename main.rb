@@ -26,9 +26,6 @@ get '/node/:site/:uuid/:sensor' do
 
   @site_data = get_data_for_site(params[:site])
 
-  #TODO remove when real data is available
-  @site_data = make_up_dummy_data_for_dataset(@site_data)
-
   node_list = get_node_list(@site_data)
 
   @site_data = JSON.parse(@site_data)
@@ -49,7 +46,7 @@ get '/node/:site/:uuid/:sensor' do
         if x["alias"] == sensor_hash[ params[:sensor] ]
           @node_data = get_reading_for_node( x["id"] )
           @node_data.each_with_index do |value, i|
-            dataset[i]["value"] = value
+            dataset[i]["value"] = (value).round(2)
           end
         end
       end
@@ -69,40 +66,21 @@ get '/node/:site/:uuid/:sensor' do
   }
 end
 
+get '/node/:site' do
+  #TODO Change redirect or make new page
+  redirect '/map/' + params[:site]
+end
+
 get '/node/:site/:uuid' do
   site_list   = get_site_list.keys
   sensor_list = [ "温度", "水位", "湿度", "電池" ]
 
   @site_data = get_data_for_site(params[:site])
 
-  #TODO remove when real data is available
-  @site_data = make_up_dummy_data_for_dataset(@site_data)
-
   node_list = get_node_list(@site_data)
-
-  @site_data = JSON.parse(@site_data)
-
-  @site_data["objects"][0]["nodes"].each do |node|
-    if node["alias"] == params[:uuid]
-      node["sensors"].each do |x|
-        if x["alias"] == 'humidity'
-          @humid = x["latest_reading"]
-        end
-        if x["alias"] == 'distance'
-          @dist  = x["latest_reading"]
-        end
-        if x["alias"] == 'temperature'
-          @temp  = x["latest_reading"]
-        end
-      end
-    end
-  end
 
   erb :nodedetail, locals:{
     id:params[:uuid],
-    dist:@dist,
-    humid:@humid,
-    temp:@temp,
     site:params[:site],
     site_list:site_list,
     node_list:node_list,
@@ -341,8 +319,7 @@ def get_site_list
       site_hash[ site["alias"].downcase.gsub(" ", "") ] = site["id"]
     end
   else
-    #TODO This is pretty useless & volatile
-    site_hash = {'hackerfarm' => 80, 'kamakura' => 82, 'digitalgarage' => 81}
+    #TODO
   end
 
   return site_hash
