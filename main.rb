@@ -119,8 +119,7 @@ get '/map/:site' do
 
   @site_data = get_data_for_site(params[:site])
 
-  #TODO remove when real data is available
-  @site_data = make_up_dummy_data_for_dataset(@site_data)
+  # JSON.parse(@site_data)
 
   node_list  = get_node_list(@site_data)
 

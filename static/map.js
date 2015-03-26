@@ -33,13 +33,13 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     + '">'
     + '<br />'
     + '<img src="/wheat10.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][0]["latest_reading"]), 2)
+    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][0]["latest_reading"]["value"]), 2)
     + '<br />'
     + '<img src="/water50.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"]), 2)
+    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"]["value"]), 2)
     + '<br />'
     + '<img src="/temp50.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][2]["latest_reading"]), 2)
+    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][2]["latest_reading"]["value"]), 2)
     + '<br />'
     + '<a href="/node/'
     + window.nodesite
