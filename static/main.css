@@ -38,7 +38,7 @@ body {
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
 
-  background-image: url('/ricefield.jpg');
+  background-image: url('/ricefield.png');
   display: table;
   width: 100%;
   height: 100%; /* For at least Firefox */
@@ -56,6 +56,10 @@ body {
 }
 .cover-heading {
   font-size: 400%;
+}
+
+.lead {
+  margin-bottom: 0px;
 }
 
 /* Text containers */
