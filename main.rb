@@ -104,12 +104,7 @@ get '/map/:site' do
   erb :map, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
 end
 
-get '/map' do
-  site_list = get_site_list.keys
-  redirect '/map/' + site_list[0]
-end
-
-get '/map/' do
+show_default_map = lambda do
   site_list = get_site_list.keys
   redirect '/map/' + site_list[0]
 end
@@ -122,6 +117,9 @@ get '/list/:site' do
 
   erb :list, locals:{ data:JSON.parse(@all_data), json_data:@all_data, site:params[:site] }
 end
+
+get '/map', &show_default_map
+get '/map/', &show_default_map
 
 # UNUSED ROUTES
 
