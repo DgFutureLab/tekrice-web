@@ -18,12 +18,6 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     riceimage = '<img src="/happyrice25.jpg"/>';
   }
   // Pop-up info
-  var alias;
-  if (window.data["objects"][0]["nodes"][i]["alias"]) {
-    alias = window.data["objects"][0]["nodes"][i]["alias"];
-  } else{
-    alias = window.nodesite + parseInt(i);
-  }
   contentString[i] = '<div class="content">'
     + '<div class="ricepic">'
     + riceimage
@@ -44,7 +38,7 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     + '<a href="/node/'
     + window.nodesite
     + '/'
-    + alias
+    + window.data["objects"][0]["nodes"][i]["id"]
     + '">Node Link</a>'
     + '</div>'
     + '</div>';

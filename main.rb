@@ -45,7 +45,7 @@ show_sensor_data = lambda do
   ]
 
   @site_data["objects"][0]["nodes"].each do |node|
-    if node["alias"] == params[:uuid]
+    if node["id"] == params[:uuid]
       node["sensors"].each do |x|
         if x["alias"] == sensor_hash[ params[:sensor] ]
           @node_data = get_reading_for_node( x["id"] )
@@ -313,14 +313,14 @@ def make_up_dummy_data_for_dataset(data)
 end
 
 def get_node_list(data)
-  node_list   = Array.new
+  node_list   = Hash.new
   parsed_data = JSON.parse(data)
   null_alias  = parsed_data["objects"][0]["alias"].downcase.gsub(" ", "")
   parsed_data["objects"][0]["nodes"].each_with_index do |node, index|
     if (node["alias"]) 
-      node_list << node["alias"]
+      node_list[node["id"]] = node["alias"]
     else
-      node_list << (null_alias + index.to_s)
+      node_list[node["id"]] = (null_alias + index.to_s)
     end
   end
 
