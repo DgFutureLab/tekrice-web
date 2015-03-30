@@ -45,7 +45,7 @@ show_sensor_data = lambda do
   ]
 
   @site_data["objects"][0]["nodes"].each do |node|
-    if node["id"] == params[:uuid]
+    if node["id"].to_s == params[:uuid]
       node["sensors"].each do |x|
         if x["alias"] == sensor_hash[ params[:sensor] ]
           @node_data = get_reading_for_node( x["id"] )
