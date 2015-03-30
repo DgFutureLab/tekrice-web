@@ -4,11 +4,15 @@ require 'net/http'
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 
+## ROUTES
+
+# Main Page
 get '/' do
   erb :main
 end
 
-get '/node/:site/:uuid/:sensor' do
+# Sensor data visuals
+show_sensor_data = lambda do
   site_list   = get_site_list.keys
   sensor_list = [ "温度", "水位", "湿度", "電池" ]
   sensor_unit = { 
@@ -66,12 +70,20 @@ get '/node/:site/:uuid/:sensor' do
   }
 end
 
-get '/node/:site' do
-  #TODO Change redirect or make new page
+get '/node/:site/:uuid/:sensor', &show_sensor_data
+get '/node/:site/:uuid/:sensor/', &show_sensor_data
+
+# Pre-emptive redirect, don't know what to do with it yet
+show_site_nodes = lambda do
+  #TODO No ideas yet, so will change redirect or make new page
   redirect '/map/' + params[:site]
 end
 
-get '/node/:site/:uuid' do
+get '/node/:site', &show_site_nodes
+get '/node/:site/', &show_site_nodes
+
+# Sensor list for 1 node
+show_sensor_list = lambda do
   site_list   = get_site_list.keys
   sensor_list = [ "温度", "水位", "湿度", "電池" ]
 
@@ -88,7 +100,11 @@ get '/node/:site/:uuid' do
   }
 end
 
-get '/map/:site' do
+get '/node/:site/:uuid', &show_sensor_list
+get '/node/:site/:uuid/', &show_sensor_list
+
+# Map Data
+show_map_data = lambda do
   site_list = get_site_list.keys
 
   if !(site_list.include?(params[:site]))
@@ -97,18 +113,24 @@ get '/map/:site' do
 
   @site_data = get_data_for_site(params[:site])
 
-  # JSON.parse(@site_data)
-
   node_list  = get_node_list(@site_data)
 
   erb :map, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
 end
 
+get '/map/:site', &show_map_data
+get '/map/:site/', &show_map_data
+
+# Default Map
 show_default_map = lambda do
   site_list = get_site_list.keys
   redirect '/map/' + site_list[0]
 end
 
+get '/map', &show_default_map
+get '/map/', &show_default_map
+
+# List of Sensors
 get '/list/:site' do
   @all_data = get_data_for_site(params[:site])
 
@@ -118,30 +140,29 @@ get '/list/:site' do
   erb :list, locals:{ data:JSON.parse(@all_data), json_data:@all_data, site:params[:site] }
 end
 
-get '/map', &show_default_map
-get '/map/', &show_default_map
 
-# UNUSED ROUTES
+## UNUSED ROUTES
 
+# Dashboard
 get '/dashboard' do
   @all_data = get_data_for_site('hackerfarm')
 
   erb :dashboard, locals:{ data:JSON.parse(@all_data), json_data:@all_data }
 end
-
 get '/dashboard/nodes' do
   erb :nodes
 end
-
 get '/settings' do
   erb :settings, locals:{ site:"hackerfarm" }
 end
 
+# Testimonial page
 get '/testimonials' do
   erb :testimonials
 end
 
-# HELPERS
+
+## HELPERS
 
 helpers do
   def partial template
@@ -149,7 +170,8 @@ helpers do
   end
 end
 
-# PRIVATE REPEATABLE FUNCTIONS
+## TODO Move to a separate file
+## PRIVATE HELPER FUNCTIONS
 
 private
 
@@ -317,7 +339,7 @@ def get_site_list
       site_hash[ site["alias"].downcase.gsub(" ", "") ] = site["id"]
     end
   else
-    #TODO
+    #TODO Exception handling
   end
 
   return site_hash
@@ -336,7 +358,7 @@ def get_reading_for_node(node_id)
       value << reading["value"]
     end
   else
-    #TODO
+    #TODO Exception handling
   end
 
   return value
