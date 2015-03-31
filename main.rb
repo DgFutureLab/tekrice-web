@@ -14,7 +14,7 @@ end
 # Sensor data visuals
 show_sensor_data = lambda do
   site_list   = get_site_list.keys
-  sensor_list = [ "温度", "水位", "湿度", "電池" ]
+  sensor_list = [ "温度", "水位", "湿度", "電池", "雨量", "太陽放射"]
   sensor_unit = { 
     "温度" => "&deg;C", "水位" => "cm",
     "湿度" => "%", "電池" => "%"
@@ -58,7 +58,19 @@ show_sensor_data = lambda do
   end
 
   if params[:sensor] == '雨量'
-    erb :sensordetail, locals:{
+    erb :rainfall, locals:{
+      id:params[:uuid],
+      sensor:params[:sensor],
+      sensor_unit:sensor_unit[params[:sensor]],
+      dataset:dataset.to_json,
+      site:params[:site],
+      site_list:site_list,
+      node_list:node_list,
+      sensor_list:sensor_list,
+      node_data:@node_data
+    }
+  elsif params[:sensor] == '太陽放射'
+    erb :solarradiation, locals:{
       id:params[:uuid],
       sensor:params[:sensor],
       sensor_unit:sensor_unit[params[:sensor]],
