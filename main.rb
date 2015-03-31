@@ -57,17 +57,31 @@ show_sensor_data = lambda do
     end
   end
 
-  erb :sensordetail, locals:{
-    id:params[:uuid],
-    sensor:params[:sensor],
-    sensor_unit:sensor_unit[params[:sensor]],
-    dataset:dataset.to_json,
-    site:params[:site],
-    site_list:site_list,
-    node_list:node_list,
-    sensor_list:sensor_list,
-    node_data:@node_data
-  }
+  if params[:sensor] == '雨量'
+    erb :sensordetail, locals:{
+      id:params[:uuid],
+      sensor:params[:sensor],
+      sensor_unit:sensor_unit[params[:sensor]],
+      dataset:dataset.to_json,
+      site:params[:site],
+      site_list:site_list,
+      node_list:node_list,
+      sensor_list:sensor_list,
+      node_data:@node_data
+    }
+  else
+    erb :sensordetail, locals:{
+      id:params[:uuid],
+      sensor:params[:sensor],
+      sensor_unit:sensor_unit[params[:sensor]],
+      dataset:dataset.to_json,
+      site:params[:site],
+      site_list:site_list,
+      node_list:node_list,
+      sensor_list:sensor_list,
+      node_data:@node_data
+    }
+  end
 end
 
 get '/node/:site/:uuid/:sensor', &show_sensor_data
