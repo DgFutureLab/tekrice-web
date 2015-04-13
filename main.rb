@@ -111,7 +111,7 @@ get '/node/:site/', &show_site_nodes
 # Sensor list for 1 node
 show_sensor_list = lambda do
   site_list   = get_site_list.keys
-  sensor_list = [ "温度", "水位", "湿度", "電池" ]
+  sensor_list = [ "温度", "水位", "湿度", "電池", "雨量", "太陽放射"]
 
   @site_data = get_data_for_site(params[:site])
 
