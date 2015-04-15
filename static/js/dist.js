@@ -19,7 +19,7 @@ var svg_dist = d3.select(".distance")
   .attr("height", height + margin.top + margin.bottom)
   .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("/test_dist.csv", function(error, data) {
+d3.csv("/data/test_dist.csv", function(error, data) {
   data.forEach(function(d) {
     d.date = parseDate(d.date);
     d.distance = +d.distance;

@@ -7,7 +7,7 @@ var svg_temp = d3.select(".temp")
   .attr("height", height + margin.top + margin.bottom)
   .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("/test_temp.csv", function(error, data) {
+d3.csv("/data/test_temp.csv", function(error, data) {
   data.forEach(function(d) {
     d.date = parseDate(d.date);
     d.temperature = +d.temperature;

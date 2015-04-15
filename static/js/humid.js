@@ -7,7 +7,7 @@ var svg_humid = d3.select(".moisture")
   .attr("height", height + margin.top + margin.bottom)
   .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("/test_humid.csv", function(error, data) {
+d3.csv("/data/test_humid.csv", function(error, data) {
   data.forEach(function(d) {
     d.date = parseDate(d.date);
     d.humidity = +d.humidity;

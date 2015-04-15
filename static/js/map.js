@@ -13,9 +13,9 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
   var distance = window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"];
   var riceimage;
   if (parseFloat(distance) < 30) {
-    riceimage = '<img src="/sadrice25.jpg"/>';
+    riceimage = '<img src="/images/sadrice25.jpg"/>';
   } else {
-    riceimage = '<img src="/happyrice25.jpg"/>';
+    riceimage = '<img src="/images/happyrice25.jpg"/>';
   }
   // Pop-up info
   contentString[i] = '<div class="content">'
@@ -26,13 +26,13 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     + i.toString()
     + '">'
     + '<br />'
-    + '<img src="/wheat10.png" />'
+    + '<img src="/images/wheat10.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][0]["latest_reading"]["value"]), 2)
     + '<br />'
-    + '<img src="/water50.png" />'
+    + '<img src="/images/water50.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"]["value"]), 2)
     + '<br />'
-    + '<img src="/temp50.png" />'
+    + '<img src="/images/temp50.png" />'
     + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][2]["latest_reading"]["value"]), 2)
     + '<br />'
     + '<a href="/node/'
@@ -85,9 +85,9 @@ function setMarkers(map, markers) {
     }
 
     if (parseFloat(distance) < 30) {
-      icon = { url:'/redpin75.png', id:alias };
+      icon = { url:'/images/redpin75.png', id:alias };
     } else {
-      icon = { url:'/greenpin75.png', id:alias };
+      icon = { url:'/images/greenpin75.png', id:alias };
     }
 
     var marker = new google.maps.Marker({
