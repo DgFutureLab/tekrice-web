@@ -366,6 +366,7 @@ def get_site_list
     end
   else
     #TODO Exception handling
+    #TODO Probably add a cache file here
   end
 
   return site_hash

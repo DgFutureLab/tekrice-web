@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem 'sinatra'
+gem 'i18n'
 
 gem 'rspec'
 gem 'capybara'
