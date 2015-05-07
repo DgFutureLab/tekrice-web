@@ -20,7 +20,14 @@ end
 
 # Main Page
 get '/' do
-  erb :main
+  case locale
+  when 'jp'
+    erb :main_jp
+  when 'en'
+    erb :main_en
+  else
+    erb :main_jp
+  end
 end
 
 # Sensor data visuals
