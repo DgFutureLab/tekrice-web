@@ -1,10 +1,22 @@
 require 'sinatra'
 require 'json'
 require 'net/http'
+require 'i18n'
+require 'i18n/backend/fallbacks'
+
+## SETTINGS
 
 set :public_folder, File.dirname(__FILE__) + '/static'
+set :locales, %w[jp en]
+set :default_locale, 'jp'
+set :locale_pattern, /^\/?(#{Regexp.union(settings.locales)})(\/.*)$/
 
 ## ROUTES
+
+# Locales
+before do
+  @locale, request.path_info = $1, $2 if request.path_info =~ settings.locale_pattern
+end
 
 # Main Page
 get '/' do
@@ -166,6 +178,12 @@ get '/list/:site' do
   erb :list, locals:{ data:JSON.parse(@all_data), json_data:@all_data, site:params[:site] }
 end
 
+# 404 Error page
+not_found do
+  status 404
+  erb :sorry
+end
+
 
 ## UNUSED ROUTES
 
@@ -193,6 +211,12 @@ end
 helpers do
   def partial template
     erb template, layout:false
+  end
+end
+
+helpers do
+  def locale
+    @locale || settings.default_locale
   end
 end
 
