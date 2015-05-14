@@ -19,7 +19,7 @@ before do
 end
 
 # Main Page
-get '/' do
+get '/?' do
   case locale
   when 'jp'
     erb :main_jp
@@ -29,6 +29,16 @@ get '/' do
     erb :main_jp
   end
 end
+
+## Dirty hack just so /en & /jp works. Consequently, /{en,jp}/{en,jp} also works.
+get '/en' do
+  erb :main_en
+end
+
+get '/jp' do
+  erb :main_jp
+end
+
 
 # Sensor data visuals
 show_sensor_data = lambda do
@@ -115,8 +125,7 @@ show_sensor_data = lambda do
   end
 end
 
-get '/node/:site/:uuid/:sensor', &show_sensor_data
-get '/node/:site/:uuid/:sensor/', &show_sensor_data
+get '/node/:site/:uuid/:sensor/?', &show_sensor_data
 
 # Pre-emptive redirect, don't know what to do with it yet
 show_site_nodes = lambda do
@@ -145,8 +154,7 @@ show_sensor_list = lambda do
   }
 end
 
-get '/node/:site/:uuid', &show_sensor_list
-get '/node/:site/:uuid/', &show_sensor_list
+get '/node/:site/:uuid/?', &show_sensor_list
 
 # Map Data
 show_map_data = lambda do
@@ -163,8 +171,7 @@ show_map_data = lambda do
   erb :map, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
 end
 
-get '/map/:site', &show_map_data
-get '/map/:site/', &show_map_data
+get '/map/:site/?', &show_map_data
 
 # Default Map
 show_default_map = lambda do
@@ -172,8 +179,7 @@ show_default_map = lambda do
   redirect '/map/' + site_list[0]
 end
 
-get '/map', &show_default_map
-get '/map/', &show_default_map
+get '/map/?', &show_default_map
 
 # List of Sensors
 get '/list/:site' do
