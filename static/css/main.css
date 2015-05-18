@@ -95,11 +95,19 @@ body {
   color: #4B4B4B;
 }
 
+.feature-detail {
+  padding-bottom: 20px;
+}
+
 #recommendedusers {
   width: 90%;
   padding-top: 80px;
   padding-bottom: 80px;
   color: #4B4B4B;
+}
+
+.recommendation-detail {
+  padding-bottom: 20px;
 }
 
 #uservoice {
