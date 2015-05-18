@@ -38,7 +38,7 @@ body {
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
 
-  background-image: url('/images/ricefield0-reduced.jpg');
+  /*background-image: url('/images/ricefield0-reduced.jpg');*/
   background-color: rgb(26, 113, 49);
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -109,21 +109,6 @@ body {
   padding-bottom: 80px;
 }
 
-#appscreen1 {
-  width:100%;
-  padding-top: 100px;
-  padding-bottom: 100px;
-  color: white;
-  background-color: #50A946;
-}
-
-#appscreen2 {
-  width:100%;
-  padding-top: 100px;
-  padding-bottom: 100px;
-  color: #0C4C29;
-}
-
 #iphonemockup {
   width: 100%;
   padding-top: 100px;
@@ -146,7 +131,6 @@ body {
 #fontsize {
   font-size: 20px;
  }
-
 
 #contact {
   padding-top: 80px;
