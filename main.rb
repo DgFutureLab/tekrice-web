@@ -8,7 +8,7 @@ require 'i18n/backend/fallbacks'
 
 set :public_folder, File.dirname(__FILE__) + '/static'
 set :locales, %w[jp en]
-set :default_locale, 'jp'
+set :default_locale, 'en'
 set :locale_pattern, /^\/?(#{Regexp.union(settings.locales)})(\/.*)$/
 
 ## ROUTES
