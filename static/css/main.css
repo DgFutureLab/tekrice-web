@@ -299,3 +299,17 @@ body {
   background-color: #2DA7E0;
   border-color: #2DA7E0;
 }
+
+/* Collaborators */
+#fljapan-logo {
+  padding-top:50px;
+}
+
+#freaklabs-logo {
+  padding-top:80px;
+  padding-bottom: 50px;
+}
+
+#hackerfarm-logo {
+  padding-top:10px;
+}
