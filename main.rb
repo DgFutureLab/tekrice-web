@@ -25,8 +25,8 @@ get '/?' do
     erb :main_jp
   when 'en'
     erb :main_en
-  else
-    erb :main_jp
+  else   #DEFAULT
+    erb :main_en
   end
 end
 
@@ -139,19 +139,41 @@ get '/node/:site/', &show_site_nodes
 # Sensor list for 1 node
 show_sensor_list = lambda do
   site_list   = get_site_list.keys
-  sensor_list = [ "温度", "水位", "湿度", "電池", "雨量", "太陽放射"]
-
   @site_data = get_data_for_site(params[:site])
-
   node_list = get_node_list(@site_data)
 
-  erb :nodedetail, locals:{
-    id:params[:uuid],
-    site:params[:site],
-    site_list:site_list,
-    node_list:node_list,
-    sensor_list:sensor_list
-  }
+  case locale
+  when 'jp'
+    sensor_list = [ "温度", "水位", "湿度", "電池", "雨量", "太陽放射"]
+
+    erb :sensor_list_jp, locals:{
+      id:params[:uuid],
+      site:params[:site],
+      site_list:site_list,
+      node_list:node_list,
+      sensor_list:sensor_list
+    }
+  when 'en'
+    sensor_list = [ "Temperature", "Water", "Moisture", "Battery", "Rainfall", "Solar radiation"]
+
+    erb :sensor_list_en, locals:{
+      id:params[:uuid],
+      site:params[:site],
+      site_list:site_list,
+      node_list:node_list,
+      sensor_list:sensor_list
+    }
+  else   #DEFAULT
+    sensor_list = [ "Temperature", "Water", "Moisture", "Battery", "Rainfall", "Solar radiation"]
+
+    erb :sensor_list_en, locals:{
+      id:params[:uuid],
+      site:params[:site],
+      site_list:site_list,
+      node_list:node_list,
+      sensor_list:sensor_list
+    }
+  end
 end
 
 get '/node/:site/:uuid/?', &show_sensor_list

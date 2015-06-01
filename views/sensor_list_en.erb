@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/css/node.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="/"><img src="/images/techrice-logo2-10-small.png" /></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/map/<%= site %>"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;Map</a></li>
+            <li><a href="mailto:futurelabdg@gmail.com"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-3 col-md-2 sidebar">
+          <h3>List of sensors</h3>
+          <br />
+          <ul>
+            <% site_list.each do |site_name| %>
+            <li><a href="/map/<%= site_name %>"><%= site_name %></a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+
+              <% if site_name == site %>
+              <ul>
+                <% node_list.each do |node_id, node_alias| %>
+                  <li><a href="/node/<%= site %>/<%= node_id %>" class="node_link"><%= node_alias %></a></li>
+                <% end %>
+              </ul>
+              <% end %>
+            <% end %>
+          </ul>
+        </div><!-- Sidebar -->
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class=container">
+            <div class="row">
+              <% sensor_list.each do |sensor| %>
+                <a href="<%= "/node/"+site+"/"+id+"/"+sensor %>" class="btn btn-info"><%= sensor %></a>&nbsp;&nbsp;
+              <% end %>
+            </div>
+          </div>
+        </div><!-- Main -->
+
+      </div><!-- Row -->
+    </div><!-- Container -->
+  </body>
+</html>
