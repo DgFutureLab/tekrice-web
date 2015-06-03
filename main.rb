@@ -190,7 +190,13 @@ show_map_data = lambda do
 
   node_list  = get_node_list(@site_data)
 
-  erb :map, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
+  case locale
+  when 'jp'
+    erb :map_jp, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
+  when 'en'
+    erb :map_en, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
+  else  #DEFAULT
+  end
 end
 
 get '/map/:site/?', &show_map_data
