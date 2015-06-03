@@ -196,6 +196,7 @@ show_map_data = lambda do
   when 'en'
     erb :map_en, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
   else  #DEFAULT
+    erb :map_en, locals:{ data:@site_data, site:params[:site], site_list:site_list, node_list:node_list }
   end
 end
 

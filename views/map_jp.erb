@@ -20,11 +20,11 @@
     <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
-          <a href="/"><img src="/images/techrice-logo2-10-small.png" /></a>
+          <a href="/jp/"><img src="/images/techrice-logo2-10-small.png" /></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/map"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;マップ</a></li>
+            <li><a href="/jp/map"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;マップ</a></li>
             <li><a href="mailto:futurelabdg@gmail.com"><i class="fa fa-envelope"></i>&nbsp;&nbsp;コンタクト</a></li>
           </ul>
         </div>
@@ -38,12 +38,12 @@
           <br />
           <ul>
             <% site_list.each do |site_name| %>
-            <li><a href="/map/<%= site_name %>"><%= site_name %></a>&nbsp;&nbsp;<i class="fa fa-map-marker"></i></li>
+            <li><a href="/jp/map/<%= site_name %>"><%= site_name %></a>&nbsp;&nbsp;<i class="fa fa-map-marker"></i></li>
 
               <% if site_name == site %>
               <ul>
                 <% node_list.each do |node_id, node_alias| %>
-                  <li><a href="/node/<%= site_name %>/<%= node_id %>" class="node_link"><%= node_alias %></a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+                  <li><a href="/jp/node/<%= site_name %>/<%= node_id %>" class="node_link"><%= node_alias %></a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
                 <% end %>
               </ul>
               <% end %>
