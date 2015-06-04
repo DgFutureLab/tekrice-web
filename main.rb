@@ -43,6 +43,7 @@ end
 # Sensor data visuals
 show_sensor_data = lambda do
   site_list   = get_site_list.keys
+
   case locale
   when 'jp'
     sensor_list = [ "温度", "水位", "湿度", "電池", "雨量", "太陽放射"]
@@ -54,77 +55,6 @@ show_sensor_data = lambda do
       "温度" => "ambient temperature", "水位" => "water_level",
       "湿度" => "air humidity", "電池" => "battery_voltage"
     }
-
-    if !sensor_list.include? params[:sensor]
-      redirect '/node/' + params[:site] + '/' + params[:uuid]
-    end
-
-    @site_data = get_data_for_site(params[:site])
-
-    node_list = get_node_list(@site_data)
-
-    @site_data = JSON.parse(@site_data)
-
-    dataset = [
-      { "index"=>"0", "day"=>"月" },
-      { "index"=>"1", "day"=>"火" },
-      { "index"=>"2", "day"=>"水" },
-      { "index"=>"3", "day"=>"木" },
-      { "index"=>"4", "day"=>"金" },
-      { "index"=>"5", "day"=>"土" },
-      { "index"=>"6", "day"=>"日" }
-    ]
-
-    @site_data["objects"][0]["nodes"].each do |node|
-      if node["id"].to_s == params[:uuid]
-        node["sensors"].each do |x|
-          if x["alias"] == sensor_hash[ params[:sensor] ]
-            @node_data = get_reading_for_node( x["id"] )
-            @node_data.each_with_index do |value, i|
-              dataset[i]["value"] = (value).round(2)
-            end
-          end
-        end
-      end
-    end
-
-    if params[:sensor] == '雨量'
-      erb :rainfall, locals:{
-        id:params[:uuid],
-        sensor:params[:sensor],
-        sensor_unit:sensor_unit[params[:sensor]],
-        dataset:dataset.to_json,
-        site:params[:site],
-        site_list:site_list,
-        node_list:node_list,
-        sensor_list:sensor_list,
-        node_data:@node_data
-      }
-    elsif params[:sensor] == '太陽放射'
-      erb :solarradiation, locals:{
-        id:params[:uuid],
-        sensor:params[:sensor],
-        sensor_unit:sensor_unit[params[:sensor]],
-        dataset:dataset.to_json,
-        site:params[:site],
-        site_list:site_list,
-        node_list:node_list,
-        sensor_list:sensor_list,
-        node_data:@node_data
-      }
-    else
-      erb :sensordetail, locals:{
-        id:params[:uuid],
-        sensor:params[:sensor],
-        sensor_unit:sensor_unit[params[:sensor]],
-        dataset:dataset.to_json,
-        site:params[:site],
-        site_list:site_list,
-        node_list:node_list,
-        sensor_list:sensor_list,
-        node_data:@node_data
-      }
-    end
   when 'en'
     sensor_list = [ "Temperature", "Water", "Moisture", "Battery", "Rainfall", "Solar radiation"]
     sensor_unit = { 
@@ -135,78 +65,64 @@ show_sensor_data = lambda do
       "Temperature" => "ambient temperature", "Water" => "water_level",
       "Moiusture" => "air humidity", "Battery" => "battery_voltage"
     }
+  else  #DEFAULT
+  end
 
-    if !sensor_list.include? params[:sensor]
-      redirect '/node/' + params[:site] + '/' + params[:uuid]
-    end
+  if !sensor_list.include? params[:sensor]
+    redirect '/node/' + params[:site] + '/' + params[:uuid]
+  end
 
-    @site_data = get_data_for_site(params[:site])
+  @site_data = get_data_for_site(params[:site])
 
-    node_list = get_node_list(@site_data)
+  node_list = get_node_list(@site_data)
 
-    @site_data = JSON.parse(@site_data)
+  @site_data = JSON.parse(@site_data)
 
-    dataset = [
-      { "index"=>"0", "day"=>"月" },
-      { "index"=>"1", "day"=>"火" },
-      { "index"=>"2", "day"=>"水" },
-      { "index"=>"3", "day"=>"木" },
-      { "index"=>"4", "day"=>"金" },
-      { "index"=>"5", "day"=>"土" },
-      { "index"=>"6", "day"=>"日" }
-    ]
+  dataset = [
+    { "index"=>"0", "day"=>"月" },
+    { "index"=>"1", "day"=>"火" },
+    { "index"=>"2", "day"=>"水" },
+    { "index"=>"3", "day"=>"木" },
+    { "index"=>"4", "day"=>"金" },
+    { "index"=>"5", "day"=>"土" },
+    { "index"=>"6", "day"=>"日" }
+  ]
 
-    @site_data["objects"][0]["nodes"].each do |node|
-      if node["id"].to_s == params[:uuid]
-        node["sensors"].each do |x|
-          if x["alias"] == sensor_hash[ params[:sensor] ]
-            @node_data = get_reading_for_node( x["id"] )
-            @node_data.each_with_index do |value, i|
-              dataset[i]["value"] = (value).round(2)
-            end
+  @site_data["objects"][0]["nodes"].each do |node|
+    if node["id"].to_s == params[:uuid]
+      node["sensors"].each do |x|
+        if x["alias"] == sensor_hash[ params[:sensor] ]
+          @node_data = get_reading_for_node( x["id"] )
+          @node_data.each_with_index do |value, i|
+            dataset[i]["value"] = (value).round(2)
           end
         end
       end
     end
+  end
 
-    if params[:sensor] == 'Rainfall'
-      erb :rainfall, locals:{
-        id:params[:uuid],
-        sensor:params[:sensor],
-        sensor_unit:sensor_unit[params[:sensor]],
-        dataset:dataset.to_json,
-        site:params[:site],
-        site_list:site_list,
-        node_list:node_list,
-        sensor_list:sensor_list,
-        node_data:@node_data
-      }
-    elsif params[:sensor] == 'Solar radiation'
-      erb :solarradiation, locals:{
-        id:params[:uuid],
-        sensor:params[:sensor],
-        sensor_unit:sensor_unit[params[:sensor]],
-        dataset:dataset.to_json,
-        site:params[:site],
-        site_list:site_list,
-        node_list:node_list,
-        sensor_list:sensor_list,
-        node_data:@node_data
-      }
-    else
-      erb :sensordetail, locals:{
-        id:params[:uuid],
-        sensor:params[:sensor],
-        sensor_unit:sensor_unit[params[:sensor]],
-        dataset:dataset.to_json,
-        site:params[:site],
-        site_list:site_list,
-        node_list:node_list,
-        sensor_list:sensor_list,
-        node_data:@node_data
-      }
-    end
-  else  #DEFAULT
+  locals = {
+    id:params[:uuid],
+    sensor:params[:sensor],
+    sensor_unit:sensor_unit[params[:sensor]],
+    dataset:dataset.to_json,
+    site:params[:site],
+    site_list:site_list,
+    node_list:node_list,
+    sensor_list:sensor_list,
+    node_data:@node_data
+  }
+
+  if params[:sensor] == '雨量'
+    erb :rainfall, locals:locals
+  elsif params[:sensor] == '太陽放射'
+    erb :solarradiation, locals:locals
+  elsif params[:sensor] == 'Rainfall'
+    erb :rainfall, locals:locals
+  elsif params[:sensor] == 'Solar radiation'
+    erb :solarradiation, locals:locals
+  else
+    erb :sensordetail, locals:locals
   end
 end
 
