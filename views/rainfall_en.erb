@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/css/node.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="/en/"><img src="/images/techrice-logo2-10-small.png" /></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/en/map/<%= site %>"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;Map</a></li>
+            <li><a href="mailto:futurelabdg@gmail.com"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-3 col-md-2 sidebar">
+          <h3>List of sensors</h3>
+          <br />
+          <ul>
+            <% site_list.each do |site_name| %>
+            <li><a href="/en/map/<%= site_name %>"><%= site_name %></a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+
+              <% if site_name == site %>
+              <ul>
+                <% node_list.each do |node_id, node_alias| %>
+                  <li><a href="/en/node/<%= site %>/<%= node_id %>" class="node_link"><%= node_alias %></a></li>
+                <% end %>
+              </ul>
+              <% end %>
+            <% end %>
+          </ul>
+        </div><!-- Sidebar -->
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class=container">
+            <div class="row">
+              <% sensor_list.each do |s| %>
+                <% if sensor == s %>
+                <a href="<%= "/en/node/"+site+"/"+id+"/"+s %>" class="btn btn-info disabled"><%= s %></a>&nbsp;&nbsp;
+                <% else %>
+                <a href="<%= "/en/node/"+site+"/"+id+"/"+s %>" class="btn btn-info"><%= s %></a>&nbsp;&nbsp;
+                <% end %>
+              <% end %>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+              <div class="col-md-9">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><%= sensor %>データ</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div id="infobox" class="hidden">
+                      <p><strong>TEST</strong></p>
+                      <p><span id="value">100</span> <%= sensor_unit %></p>
+                    </div>
+                    <div id="graph">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- Main -->
+
+      </div><!-- Row -->
+    </div><!-- Container -->
+    <script type="text/javascript">
+      window.data = <%= dataset %>;
+    </script>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/rainfall.js"></script>
+  </body>
+</html>

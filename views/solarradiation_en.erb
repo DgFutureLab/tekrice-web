@@ -12,12 +12,12 @@
     <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
-          <a href="/"><img src="/images/techrice-logo2-10-small.png" /></a>
+          <a href="/en/"><img src="/images/techrice-logo2-10-small.png" /></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/map/<%= site %>"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;マップ</a></li>
-            <li><a href="mailto:futurelabdg@gmail.com"><i class="fa fa-envelope"></i>&nbsp;&nbsp;コンタクト</a></li>
+            <li><a href="/en/map/<%= site %>"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;Map</a></li>
+            <li><a href="mailto:futurelabdg@gmail.com"><i class="fa fa-envelope"></i>&nbsp;&nbsp;Contact</a></li>
           </ul>
         </div>
       </div>
@@ -27,16 +27,16 @@
       <div class="row">
 
         <div class="col-sm-3 col-md-2 sidebar">
-          <h3>設置したセンサー</h3>
+          <h3>List of sensors</h3>
           <br />
           <ul>
             <% site_list.each do |site_name| %>
-            <li><a href="/map/<%= site_name %>"><%= site_name %></a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
+            <li><a href="/en/map/<%= site_name %>"><%= site_name %></a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
 
               <% if site_name == site %>
               <ul>
                 <% node_list.each do |node_id, node_alias| %>
-                  <li><a href="/node/<%= site %>/<%= node_id %>" class="node_link"><%= node_alias %></a></li>
+                  <li><a href="/en/node/<%= site %>/<%= node_id %>" class="node_link"><%= node_alias %></a></li>
                 <% end %>
               </ul>
               <% end %>
@@ -49,9 +49,9 @@
             <div class="row">
               <% sensor_list.each do |s| %>
                 <% if sensor == s %>
-                <a href="<%= "/node/"+site+"/"+id+"/"+s %>" class="btn btn-info disabled"><%= s %></a>&nbsp;&nbsp;
+                <a href="<%= "/en/node/"+site+"/"+id+"/"+s %>" class="btn btn-info disabled"><%= s %></a>&nbsp;&nbsp;
                 <% else %>
-                <a href="<%= "/node/"+site+"/"+id+"/"+s %>" class="btn btn-info"><%= s %></a>&nbsp;&nbsp;
+                <a href="<%= "/en/node/"+site+"/"+id+"/"+s %>" class="btn btn-info"><%= s %></a>&nbsp;&nbsp;
                 <% end %>
               <% end %>
             </div>
