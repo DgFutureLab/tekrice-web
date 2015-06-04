@@ -9,39 +9,14 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="/jp/"><img src="/images/techrice-logo2-10-small.png" /></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/jp/map/<%= site %>"><i class="fa fa-map-marker"></i>&nbsp;&nbsp;マップ</a></li>
-            <li><a href="mailto:futurelabdg@gmail.com"><i class="fa fa-envelope"></i>&nbsp;&nbsp;コンタクト</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    
+    <%= partial(:partial_topbar_jp) %>
 
     <div class="container-fluid">
       <div class="row">
 
         <div class="col-sm-3 col-md-2 sidebar">
-          <h3>設置したセンサー</h3>
-          <br />
-          <ul>
-            <% site_list.each do |site_name| %>
-            <li><a href="/jp/map/<%= site_name %>"><%= site_name %></a>&nbsp;&nbsp;<i class="fa fa-line-chart"></i></li>
-
-              <% if site_name == site %>
-              <ul>
-                <% node_list.each do |node_id, node_alias| %>
-                  <li><a href="/jp/node/<%= site %>/<%= node_id %>" class="node_link"><%= node_alias %></a></li>
-                <% end %>
-              </ul>
-              <% end %>
-            <% end %>
-          </ul>
+          <%= erb :partial_nodelist_jp, locals:{site:site, site_list:site_list, node_list:node_list} %>
         </div><!-- Sidebar -->
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

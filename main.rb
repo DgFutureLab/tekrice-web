@@ -113,16 +113,23 @@ show_sensor_data = lambda do
     node_data:@node_data
   }
 
-  if params[:sensor] == '雨量'
-    erb :rainfall, locals:locals
-  elsif params[:sensor] == '太陽放射'
-    erb :solarradiation, locals:locals
-  elsif params[:sensor] == 'Rainfall'
-    erb :rainfall, locals:locals
-  elsif params[:sensor] == 'Solar radiation'
-    erb :solarradiation, locals:locals
-  else
-    erb :sensordetail, locals:locals
+  case locale
+  when 'jp'
+    if params[:sensor] == '雨量'
+      erb :rainfall_jp, locals:locals
+    elsif params[:sensor] == '太陽放射'
+      erb :solarradiation_jp, locals:locals
+    else
+      erb :sensordetail_jp, locals:locals
+    end
+  when 'en'
+    if params[:sensor] == 'Rainfall'
+      erb :rainfall_en, locals:locals
+    elsif params[:sensor] == 'Solar radiation'
+      erb :solarradiation_en, locals:locals
+    else
+      erb :sensordetail_en, locals:locals
+    end
   end
 end
 
