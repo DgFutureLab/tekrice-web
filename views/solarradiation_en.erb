@@ -16,7 +16,7 @@
       <div class="row">
 
         <div class="col-sm-3 col-md-2 sidebar">
-          <%= partial(:partial_nodelist_en) %>
+          <%= erb :partial_nodelist_en, locals:{site:site, site_list:site_list, node_list:node_list} %>
         </div><!-- Sidebar -->
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
