@@ -77,6 +77,7 @@ show_sensor_data = lambda do
   node_list = get_node_list(@site_data)
 
   @site_data = JSON.parse(@site_data)
+  p @site_data
 
   dataset = [
     { "index"=>"0", "day"=>"月" },
@@ -89,6 +90,7 @@ show_sensor_data = lambda do
   ]
 
   @site_data["objects"][0]["nodes"].each do |node|
+    p node
     if node["id"].to_s == params[:uuid]
       node["sensors"].each do |x|
         if x["alias"] == sensor_hash[ params[:sensor] ]
@@ -378,7 +380,8 @@ def get_data_for_site(site)
   site_id_hash = get_site_list
 
   if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-    api_link = "http://satoyamacloud.com/site/" + site_id_hash[site].to_s
+    #api_link = "http://satoyamacloud.com/site/" + site_id_hash[site].to_s
+    api_link = "http://128.199.120.30/site/" + site_id_hash[site].to_s
     all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
     # Inserts new data into cache file
@@ -430,7 +433,8 @@ end
 def get_site_list
   site_hash = {}
 
-  api_link = "http://satoyamacloud.com/sites"
+  #api_link = "http://satoyamacloud.com/sites"
+  api_link = "http://128.199.120.30/sites"
   all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
   if all_data_call.code == "200"
@@ -447,7 +451,8 @@ def get_site_list
 end
 
 def get_reading_for_node(node_id)
-  api_link = "http://satoyamacloud.com/readings?sensor_id=" + node_id.to_s
+  #api_link = "http://satoyamacloud.com/readings?sensor_id=" + node_id.to_s
+  api_link = "http://128.199.120.30/readings?sensor_id=" + node_id.to_s
   all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
   if all_data_call.code == "200"
