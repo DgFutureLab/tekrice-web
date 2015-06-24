@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/css/node.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  </head>
+
+  <body>
+
+    <%= partial(:partial_topbar_en) %>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-3 col-md-2 sidebar">
+          <%= erb :partial_nodelist_en, locals:{site:site, site_list:site_list, node_list:node_list} %>
+        </div><!-- Sidebar -->
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class=container">
+            <div class="row">
+              <% sensor_list.each do |s| %>
+                <% if sensor == s %>
+                <a href="<%= "/en/node/"+site+"/"+id+"/"+s %>" class="btn btn-info disabled"><%= s %></a>&nbsp;&nbsp;
+                <% else %>
+                <a href="<%= "/en/node/"+site+"/"+id+"/"+s %>" class="btn btn-info"><%= s %></a>&nbsp;&nbsp;
+                <% end %>
+              <% end %>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+              <div class="col-md-7">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><%= sensor %> Data</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div id="infobox" class="hidden">
+                      <p><strong>TEST</strong></p>
+                      <p><span id="value">100</span> <%= sensor_unit %></p>
+                    </div>
+                    <div id="graph">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <img src="/images/happyrice25.jpg" />
+              </div>
+            </div>
+          </div>
+        </div><!-- Main -->
+
+      </div><!-- Row -->
+    </div><!-- Container -->
+    <script type="text/javascript">
+      window.data = <%= dataset %>;
+    </script>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/data.js"></script>
+  </body>
+</html>

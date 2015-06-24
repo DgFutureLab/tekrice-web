@@ -63,7 +63,7 @@ show_sensor_data = lambda do
     }
     sensor_hash = { 
       "Temperature" => "ambient temperature", "Water" => "water_level",
-      "Moiusture" => "air humidity", "Battery" => "battery_voltage"
+      "Moisture" => "air humidity", "Battery" => "battery_voltage"
     }
   else  #DEFAULT
   end
@@ -77,7 +77,6 @@ show_sensor_data = lambda do
   node_list = get_node_list(@site_data)
 
   @site_data = JSON.parse(@site_data)
-  p @site_data
 
   dataset = [
     { "index"=>"0", "day"=>"月" },
@@ -90,13 +89,14 @@ show_sensor_data = lambda do
   ]
 
   @site_data["objects"][0]["nodes"].each do |node|
-    p node
     if node["id"].to_s == params[:uuid]
       node["sensors"].each do |x|
         if x["alias"] == sensor_hash[ params[:sensor] ]
           @node_data = get_reading_for_node( x["id"] )
-          @node_data.each_with_index do |value, i|
-            dataset[i]["value"] = (value).round(2)
+          i = 0
+          (-7..-1).each do |j|
+            dataset[i]["value"] = (@node_data[j]).round(2)
+            i+=1
           end
         end
       end
@@ -121,6 +121,8 @@ show_sensor_data = lambda do
       erb :rainfall_jp, locals:locals
     elsif params[:sensor] == '太陽放射'
       erb :solarradiation_jp, locals:locals
+    elsif params[:sensor] == '水位'
+      erb :waterlevel_jp, locals:locals
     else
       erb :sensordetail_jp, locals:locals
     end
@@ -129,6 +131,8 @@ show_sensor_data = lambda do
       erb :rainfall_en, locals:locals
     elsif params[:sensor] == 'Solar radiation'
       erb :solarradiation_en, locals:locals
+    elsif params[:sensor] == 'Water'
+      erb :waterlevel_en, locals:locals
     else
       erb :sensordetail_en, locals:locals
     end
