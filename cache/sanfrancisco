@@ -12,6 +12,38 @@
                     "longitude": -122.43033, 
                     "sensors": [
                         {
+                            "alias": "water_level", 
+                            "id": 32, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "water_level", 
+                                        "id": "32"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-06-23-18:35:10:146390", 
+                                "value": 13.55
+                            }
+                        }, 
+                        {
+                            "alias": "battery_voltage", 
+                            "id": 31, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "battery_voltage", 
+                                        "id": "31"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-06-23-18:35:10:146416", 
+                                "value": 2.56
+                            }
+                        }, 
+                        {
                             "alias": "ambient temperature", 
                             "id": 33, 
                             "latest_reading": {
@@ -41,38 +73,6 @@
                                 "sensor_id": null, 
                                 "timestamp": "2015-06-24-00:00:00:000000", 
                                 "value": 72.16388975032176
-                            }
-                        }, 
-                        {
-                            "alias": "battery_voltage", 
-                            "id": 31, 
-                            "latest_reading": {
-                                "id": null, 
-                                "sensor": [
-                                    {
-                                        "alias": "battery_voltage", 
-                                        "id": "31"
-                                    }
-                                ], 
-                                "sensor_id": null, 
-                                "timestamp": "2015-06-24-00:00:00:000000", 
-                                "value": 3.5813280310547775
-                            }
-                        }, 
-                        {
-                            "alias": "water_level", 
-                            "id": 32, 
-                            "latest_reading": {
-                                "id": null, 
-                                "sensor": [
-                                    {
-                                        "alias": "water_level", 
-                                        "id": "32"
-                                    }
-                                ], 
-                                "sensor_id": null, 
-                                "timestamp": "2015-06-24-00:00:00:000000", 
-                                "value": 50.927202225757675
                             }
                         }
                     ]

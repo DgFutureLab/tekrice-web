@@ -108,6 +108,7 @@ show_sensor_data = lambda do
     sensor:params[:sensor],
     sensor_unit:sensor_unit[params[:sensor]],
     dataset:dataset.to_json,
+    latest_value:dataset[-1]["value"],
     site:params[:site],
     site_list:site_list,
     node_list:node_list,
