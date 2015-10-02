@@ -385,9 +385,12 @@ def get_data_for_site(site)
   site_id_hash = get_site_list
 
   if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 60*60))
-    #api_link = "http://satoyamacloud.com/site/" + site_id_hash[site].to_s
-    api_link = "http://128.199.120.30/site/" + site_id_hash[site].to_s
+    api_link = "http://satoyamacloud.com/site/" + site_id_hash[site].to_s
+    #api_link = "http://128.199.120.30/site/" + site_id_hash[site].to_s
     all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
+    
+    # Clean up data for null values, misordered keys, etc.
+    all_data_call = cleanup_sitedata(all_data_call)
 
     # Inserts new data into cache file
     if all_data_call.code == "200"
@@ -405,6 +408,117 @@ def get_data_for_site(site)
   end
 
   return @all_data
+end
+
+def cleanup_sitedata(data)
+  # Desired data structure -> Look at Dummy Data
+
+  clean_data =
+  {
+    "errors"  => "",
+    "objects" => [],
+    "query"   => ""
+  }
+
+  clean_data["errors"] = (!data["errors"].nil? ? data["errors"] : "")
+  clean_data["query"]  = (!data["query"].nil? ? data["query"] : "")
+
+  clean_object = 
+  {
+    "alias" => "dummydata",
+    "id"    => 17,
+    "nodes" => 
+      [{
+        "alias": "livingroom", 
+            "id": 2, 
+            "latitude": null, 
+            "longitude": null, 
+            "nodetype_id": 2, 
+            "sensors": [
+                {
+                    "alias": "water_level", 
+                    "id": 3, 
+                    "latest_reading": null
+                }, 
+                {
+                    "alias": "ambient temperature", 
+                    "id": 4, 
+                    "latest_reading": {
+                        "id": null, 
+                        "sensor": [
+                            {
+                                "alias": "ambient temperature", 
+                                "id": "4"
+                            }
+                        ], 
+                        "sensor_id": null, 
+                        "timestamp": "2015-09-27-13:25:06:690485", 
+                        "value": 25.0
+                    }
+                }, 
+                {
+                    "alias": "air humidity", 
+                    "id": 5, 
+                    "latest_reading": {
+                        "id": null, 
+                        "sensor": [
+                            {
+                                "alias": "air humidity", 
+                                "id": "5"
+                            }
+                        ], 
+                        "sensor_id": null, 
+                        "timestamp": "2015-09-27-13:25:06:710900", 
+                        "value": 44.0
+                    }
+                }, 
+                {
+                    "alias": "battery_voltage", 
+                    "id": 2, 
+                    "latest_reading": {
+                        "id": null, 
+                        "sensor": [
+                            {
+                                "alias": "battery_voltage", 
+                                "id": "2"
+                            }
+                        ], 
+                        "sensor_id": null, 
+                        "timestamp": "2015-09-27-13:25:06:730386", 
+                        "value": 2.21
+                    }
+                }
+            ], 
+            "short_address": 2, 
+            "site_id": 1
+      }]
+  }
+
+  # OBJECTS
+  data["objects"].each_with_index do |object, i|
+    clean_object = {}
+    clean_object["alias"] = (!object["alias"].nil? ? object["alias"] :  "alias#{i}")
+    clean_object["id"]    = (!object["id"].nil? ? object["alias"] : "#{i}")
+
+    # NODES
+    clean_object["nodes"] = []
+    if !data["nodes"].nil? 
+      data["nodes"].each_with_index do |node, j|
+        clean_node = {}
+
+        #Insert data
+        clean_object["nodes"] << clean_node
+      end
+    else
+      #TODO
+      clean_object["nodes"] = dummy_nodes
+    end
+
+    # Insert data
+    clean_data["objects"] << clean_object
+  end
+
+  return clean_data
 end
 
 def make_up_dummy_data_for_dataset(data)
@@ -438,26 +552,34 @@ end
 def get_site_list
   site_hash = {}
 
-  #api_link = "http://satoyamacloud.com/sites"
-  api_link = "http://128.199.120.30/sites"
+  api_link = "http://satoyamacloud.com/sites"
+  #api_link = "http://128.199.120.30/sites"
   all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
   if all_data_call.code == "200"
     all_data = JSON.parse(all_data_call.body)
     all_data["objects"].each do |site|
-      site_hash[ site["alias"].downcase.gsub(" ", "") ] = site["id"]
+      if !site["alias"].nil?
+        site_hash[ site["alias"].downcase.gsub(" ", "") ] = site["id"]
+      else
+        #TODO Placeholder
+        site_hash[ site["id"] ] = site["id"]
+      end
     end
   else
-    #TODO Exception handling
-    #TODO Probably add a cache file here
+    #TODO Use dummy data
+    site_hash = {
+      "hackerfarm"    => 1,
+      "digitalgarage" => 2
+    }
   end
 
   return site_hash
 end
 
 def get_reading_for_node(node_id)
-  #api_link = "http://satoyamacloud.com/readings?sensor_id=" + node_id.to_s
-  api_link = "http://128.199.120.30/readings?sensor_id=" + node_id.to_s
+  api_link = "http://satoyamacloud.com/readings?sensor_id=" + node_id.to_s
+  #api_link = "http://128.199.120.30/readings?sensor_id=" + node_id.to_s
   all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
 
   if all_data_call.code == "200"

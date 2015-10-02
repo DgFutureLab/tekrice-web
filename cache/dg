@@ -1,0 +1,79 @@
+{
+    "errors": [], 
+    "objects": [
+        {
+            "alias": "DG", 
+            "id": 2, 
+            "nodes": [
+                {
+                    "alias": "11F_aggregator", 
+                    "id": 4, 
+                    "latitude": null, 
+                    "longitude": null, 
+                    "sensors": [
+                        {
+                            "alias": "water_level", 
+                            "id": 11, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "ambient temperature", 
+                            "id": 12, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "air humidity", 
+                            "id": 13, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "battery_voltage", 
+                            "id": 10, 
+                            "latest_reading": {
+                                "id": null, 
+                                "sensor": [
+                                    {
+                                        "alias": "battery_voltage", 
+                                        "id": "10"
+                                    }
+                                ], 
+                                "sensor_id": null, 
+                                "timestamp": "2015-09-28-07:48:38:775494", 
+                                "value": 0.0
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "alias": "11F_furthest_from_toilet_entrance", 
+                    "id": 5, 
+                    "latitude": null, 
+                    "longitude": null, 
+                    "sensors": [
+                        {
+                            "alias": "battery_voltage", 
+                            "id": 14, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "water_level", 
+                            "id": 15, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "ambient temperature", 
+                            "id": 16, 
+                            "latest_reading": null
+                        }, 
+                        {
+                            "alias": "air humidity", 
+                            "id": 17, 
+                            "latest_reading": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ], 
+    "query": {}
+}

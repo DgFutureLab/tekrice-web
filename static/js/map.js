@@ -9,14 +9,47 @@ truncateDecimals = function (number, digits) {
   return truncatedNum / multiplier;
 }
 
+get_distance_data = function (i) {
+  if (window.data["objects"][0]["nodes"][i] != undefined) {
+    if (window.data["objects"][0]["nodes"][i]["sensors"][0]["latest_reading"]["value"] != undefined) {
+      return window.data["objects"][0]["nodes"][i]["sensors"][0]["latest_reading"]["value"];
+    }
+    else {
+      return null;
+    }
+  }
+  else {
+    return null;
+  }
+}
+
+get_temperature_data = function (i) {
+  if (window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"]["value"] != undefined) {
+    return window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"]["value"];
+  }
+  else {
+    return null;
+  }
+}
+
+get_humidity_data = function (i) {
+  if (window.data["objects"][0]["nodes"][i]["sensors"][2]["latest_reading"]["value"] != undefined) {
+    return window.data["objects"][0]["nodes"][i]["sensors"][2]["latest_reading"]["value"];
+  }
+  else {
+    return null;
+  }
+}
+
 for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
-  var distance = window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"];
+  var distance = get_distance_data();
   var riceimage;
   if (parseFloat(distance) < 30) {
     riceimage = '<img src="/images/sadrice25.jpg"/>';
   } else {
     riceimage = '<img src="/images/happyrice25.jpg"/>';
   }
+
   // Pop-up info
   contentString[i] = '<div class="content">'
     + '<div class="ricepic">'
@@ -27,13 +60,13 @@ for (var i = 0; i < window.data["objects"][0]["nodes"].length; i++) {
     + '">'
     + '<br />'
     + '<img src="/images/wheat10.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][0]["latest_reading"]["value"]), 2)
+    //+ truncateDecimals(parseFloat(get_distance_data(i)), 2)
     + '<br />'
     + '<img src="/images/water50.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][1]["latest_reading"]["value"]), 2)
+    //+ truncateDecimals(parseFloat(get_humidity_data(i)), 2)
     + '<br />'
     + '<img src="/images/temp50.png" />'
-    + truncateDecimals(parseFloat(window.data["objects"][0]["nodes"][i]["sensors"][2]["latest_reading"]["value"]), 2)
+    //+ truncateDecimals(parseFloat(get_temperature_data(i)), 2)
     + '<br />'
     + '<a href="/node/'
     + window.nodesite
