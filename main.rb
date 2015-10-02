@@ -423,90 +423,66 @@ def cleanup_sitedata(data)
   clean_data["errors"] = (!data["errors"].nil? ? data["errors"] : "")
   clean_data["query"]  = (!data["query"].nil? ? data["query"] : "")
 
-  clean_object = 
-  {
-    "alias" => "dummydata",
-    "id"    => 17,
-    "nodes" => 
-      [{
-        "alias": "livingroom", 
-            "id": 2, 
-            "latitude": null, 
-            "longitude": null, 
-            "nodetype_id": 2, 
-            "sensors": [
-                {
-                    "alias": "water_level", 
-                    "id": 3, 
-                    "latest_reading": null
-                }, 
-                {
-                    "alias": "ambient temperature", 
-                    "id": 4, 
-                    "latest_reading": {
-                        "id": null, 
-                        "sensor": [
-                            {
-                                "alias": "ambient temperature", 
-                                "id": "4"
-                            }
-                        ], 
-                        "sensor_id": null, 
-                        "timestamp": "2015-09-27-13:25:06:690485", 
-                        "value": 25.0
-                    }
-                }, 
-                {
-                    "alias": "air humidity", 
-                    "id": 5, 
-                    "latest_reading": {
-                        "id": null, 
-                        "sensor": [
-                            {
-                                "alias": "air humidity", 
-                                "id": "5"
-                            }
-                        ], 
-                        "sensor_id": null, 
-                        "timestamp": "2015-09-27-13:25:06:710900", 
-                        "value": 44.0
-                    }
-                }, 
-                {
-                    "alias": "battery_voltage", 
-                    "id": 2, 
-                    "latest_reading": {
-                        "id": null, 
-                        "sensor": [
-                            {
-                                "alias": "battery_voltage", 
-                                "id": "2"
-                            }
-                        ], 
-                        "sensor_id": null, 
-                        "timestamp": "2015-09-27-13:25:06:730386", 
-                        "value": 2.21
-                    }
-                }
-            ], 
-            "short_address": 2, 
-            "site_id": 1
-      }]
-  }
-
   # OBJECTS
   data["objects"].each_with_index do |object, i|
     clean_object = {}
-    clean_object["alias"] = (!object["alias"].nil? ? object["alias"] :  "alias#{i}")
+    clean_object["alias"] = (!object["alias"].nil? ? object["alias"] : "object_alias#{i}")
     clean_object["id"]    = (!object["id"].nil? ? object["alias"] : "#{i}")
 
     # NODES
     clean_object["nodes"] = []
-    if !data["nodes"].nil? 
-      data["nodes"].each_with_index do |node, j|
+    if !object["nodes"].nil? 
+      object["nodes"].each_with_index do |node, j|
         clean_node = {}
+        clean_node["alias"] = (!node["alias"].nil? ? node["alias"] : "node_alias#{j}")
+        clean_node["id"]    = (!node["id"].nil? ? node["id"] : "#{j}")
+        clean_node["latitude"]  = (!node["latitude"].nil? ? node["latitude"] : 35.646261)
+        clean_node["longitude"] = (!node["longitude"].nil? ? node["longitude"] : 139.703749)
 
-        #Insert data
+        # SENSORS
+        clean_node["sensors"] = []
+        if !node["sensors"].nil?
+          node["sensors"].each_with_index do |sensor, k|
+            clean_sensor = {}
+            clean_sensor["alias"] = (!sensor["alias"].nil? ? sensor["alias"] : "sensor_alias#{k}")
+            clean_sensor["id"]    = (!sensor["id"].nil? ? sensor["id"] : "#{k}")
+
+            # READINGS
+            clean_sensor["latest_reading"] = {}
+            if !sensor["latest_reading"].nil?
+              sensor["nodes"].each_with_index do |reading, l|
+                clean_reading = {}
+                clean_reading["id"]        = (!reading["id"].nil? ? reading["id"] : "#{l}")
+                clean_reading["sensor_id"] = (!reading["sensor_id"].nil? ? reading["sensor_id"] : "#{l}")
+                clean_reading["timestamp"] = (!reading["timestamp"].nil? ? reading["timestamp"] : Time.now)
+                clean_reading["value"]     = (!reading["value"].nil? ? reading["value"] : 0)
+
+                # READING - SENSOR
+                clean_reading["sensor"] = []
+                if !reading["sensor"].nil?
+                  reading["sensor"].each_with_index do |reading_sensor, m|
+                    clean_reading_sensor = {}
+                    clean_reading_sensor["alias"] = (!reading_sensor["alias"].nil? ? reading_sensor["alias"] : "reading_sensor_alias#{m}")
+                    clean_reading_sensor["id"]    = (!reading_sensor["id"].nil? ? reading_sensor["id"] : "#{m}")
+
+                    #Insert clean reading_sensor data
+                    clean_reading["sensor"] << clean_reading_sensor
+                  end
+                end
+
+                #Insert clean latest reading data
+                clean_sensor["latest_reading"] << clean_reading
+              end
+            end
+
+            clean_node["sensors"] << clean_sensor
+          end
+
+          #Insert clean sensor data
+          clean_node["sensors"] << clean_sensor
+        end
+
+        #Insert clean node data
         clean_object["nodes"] << clean_node
       end
     else
