@@ -202,6 +202,7 @@ show_map_data = lambda do
   end
 
   @site_data = get_data_for_site(params[:site])
+  p @site_data
 
   node_list  = get_node_list(@site_data)
 
@@ -283,104 +284,6 @@ end
 private
 
 def get_data_for_site(site)
-
-  # Dummy data for testing
-  test_data =
-  {
-    "errors" => [],
-    "objects"=> 
-      [{
-        "alias" => "dummydata",
-        "id"    => 17,
-        "nodes" => 
-          [{
-            "alias" => "testdata1",
-            "id"    => 1,
-            "latitude" => 35.143465822954,
-            "longitude"=> 139.988288016007,
-            "sensors"  => [
-              {
-                  "alias" => "temperature",
-                  "id"    => 18,
-                  "latest_reading" => 20
-              },
-              {
-                  "alias" => "distance",
-                  "id"    => 19,
-                  "latest_reading" => 30
-              },
-              {
-                  "alias" => "humidity",
-                  "id"    => 20,
-                  "latest_reading" => 5
-              },
-              {
-                  "alias" => "vbat",
-                  "id"    => 21,
-                  "latest_reading" => 90
-              }
-            ]
-          },
-          {
-            "alias" => "testdata2",
-            "id"    => 2,
-            "latitude" => 35.1434376171813,
-            "longitude"=> 139.988905063503,
-            "sensors"  => [
-              {
-                  "alias" => "temperature",
-                  "id"    => 22,
-                  "latest_reading" => 20
-              },
-              {
-                  "alias" => "distance",
-                  "id"    => 23,
-                  "latest_reading" => 28
-              },
-              {
-                  "alias" => "humidity",
-                  "id"    => 24,
-                  "latest_reading" => 5
-              },
-              {
-                  "alias" => "vbat",
-                  "id"    => 25,
-                  "latest_reading" => 87
-              }
-            ]
-          },
-          {
-            "alias" => "testdata3",
-            "id"    => 9,
-            "latitude" => 35.1433998877005,
-            "longitude"=> 139.98802001624,
-            "sensors"  => [
-              {
-                  "alias" => "temperature",
-                  "id"    => 26,
-                  "latest_reading" => nil
-              },
-              {
-                  "alias" => "distance",
-                  "id"    => 27,
-                  "latest_reading" => nil
-              },
-              {
-                  "alias" => "humidity",
-                  "id"    => 28,
-                  "latest_reading" => nil
-              },
-              {
-                  "alias" => "vbat",
-                  "id"    => 29,
-                  "latest_reading" => nil
-              }
-            ]
-          }]
-      }],
-    "query" => {}
-  }
-
   cache_file   = File.join("cache", site)
   site_id_hash = get_site_list
 
@@ -389,12 +292,11 @@ def get_data_for_site(site)
     #api_link = "http://128.199.120.30/site/" + site_id_hash[site].to_s
     all_data_call = Net::HTTP.get_response(URI.parse( api_link ))
     
-    # Clean up data for null values, misordered keys, etc.
-    all_data_call = cleanup_sitedata(all_data_call)
-
     # Inserts new data into cache file
     if all_data_call.code == "200"
-      @all_data = all_data_call.body
+      # Clean up data for null values, misordered keys, etc.
+      @all_data = cleanup_sitedata(JSON.parse(all_data_call.body))
+
       File.open(cache_file, "w"){ |f| f << @all_data }
     else
       if File.exist?(cache_file)
@@ -412,7 +314,6 @@ end
 
 def cleanup_sitedata(data)
   # Desired data structure -> Look at Dummy Data
-
   clean_data =
   {
     "errors"  => "",
@@ -449,45 +350,93 @@ def cleanup_sitedata(data)
 
             # READINGS
             clean_sensor["latest_reading"] = {}
-            if !sensor["latest_reading"].nil?
-              sensor["nodes"].each_with_index do |reading, l|
-                clean_reading = {}
-                clean_reading["id"]        = (!reading["id"].nil? ? reading["id"] : "#{l}")
-                clean_reading["sensor_id"] = (!reading["sensor_id"].nil? ? reading["sensor_id"] : "#{l}")
-                clean_reading["timestamp"] = (!reading["timestamp"].nil? ? reading["timestamp"] : Time.now)
-                clean_reading["value"]     = (!reading["value"].nil? ? reading["value"] : 0)
+            if sensor.has_key?("latest_reading") && !sensor["latest_reading"].nil?
+              clean_reading = {}
+              clean_reading["id"]        = (!sensor["latest_reading"]["id"].nil? ? sensor["latest_reading"]["id"] : 1)
+              clean_reading["sensor_id"] = (!sensor["latest_reading"]["sensor_id"].nil? ? sensor["latest_reading"]["sensor_id"] : 1)
+              clean_reading["timestamp"] = (!sensor["latest_reading"]["timestamp"].nil? ? sensor["latest_reading"]["timestamp"] : Time.now.iso8601)
+              clean_reading["value"]     = (!sensor["latest_reading"]["value"].nil? ? sensor["latest_reading"]["value"] : 0)
 
-                # READING - SENSOR
-                clean_reading["sensor"] = []
-                if !reading["sensor"].nil?
-                  reading["sensor"].each_with_index do |reading_sensor, m|
-                    clean_reading_sensor = {}
-                    clean_reading_sensor["alias"] = (!reading_sensor["alias"].nil? ? reading_sensor["alias"] : "reading_sensor_alias#{m}")
-                    clean_reading_sensor["id"]    = (!reading_sensor["id"].nil? ? reading_sensor["id"] : "#{m}")
+              # READING - SENSOR
+              clean_reading["sensor"] = []
+              if sensor["latest_reading"].has_key?("sensor") && !sensor["latest_reading"]["sensor"].nil?
+                sensor["latest_reading"]["sensor"].each_with_index do |reading_sensor, m|
+                  clean_reading_sensor = {}
+                  clean_reading_sensor["alias"] = (!reading_sensor["alias"].nil? ? reading_sensor["alias"] : "reading_sensor_alias#{m}")
+                  clean_reading_sensor["id"]    = (!reading_sensor["id"].nil? ? reading_sensor["id"] : "#{m}")
 
-                    #Insert clean reading_sensor data
-                    clean_reading["sensor"] << clean_reading_sensor
-                  end
+                  #Insert clean reading_sensor data
+                  clean_reading["sensor"] << clean_reading_sensor
                 end
-
-                #Insert clean latest reading data
-                clean_sensor["latest_reading"] << clean_reading
+              else
+                clean_reading["sensor"] = [{
+                  "alias" => "test",
+                  "id"    => 1
+                }]
               end
+              ### READING-SENSOR
+
+              #Insert clean latest reading data
+              clean_sensor["latest_reading"] = clean_reading
+            else
+              clean_sensor["latest_reading"] = {
+                "id"        => 1,
+                "sensor_id" => 1,
+                "timestamp" => Time.now.iso8601,
+                "value"     => 0,
+                "sensor"    => [
+                  {
+                    "alias" => "test",
+                    "id"    => 1
+                  }
+                ]
+              }
             end
+            ### READINGS
 
             clean_node["sensors"] << clean_sensor
           end
-
-          #Insert clean sensor data
-          clean_node["sensors"] << clean_sensor
+        else
+          clean_node["sensors"] = [
+            "alias" => "test",
+            "id"    => 1,
+            "latest_reading" => {
+              "id"        => 1,
+              "sensor_id" => 1,
+              "timestamp" => Time.now.iso8601,
+              "value"     => 0,
+              "sensor"    => [
+                {
+                  "alias" => "test",
+                  "id"    => 1
+                }
+              ]
+            }
+          ]
         end
 
         #Insert clean node data
         clean_object["nodes"] << clean_node
       end
     else
-      #TODO
-      clean_object["nodes"] = dummy_nodes
+      clean_object["nodes"] = [{
+        "sensors" => [
+          "alias" => "test",
+          "id"    => 1,
+          "latest_reading" => {
+            "id"        => 1,
+            "sensor_id" => 1,
+            "timestamp" => Time.now.iso8601,
+            "value"     => 0,
+            "sensor"    => [
+              {
+                "alias" => "test",
+                "id"    => 1
+              }
+            ]
+          }
+        ]
+      }]
     end
 
     # Insert data
@@ -512,6 +461,7 @@ end
 
 def get_node_list(data)
   node_list   = Hash.new
+  #parsed_data = eval(data)
   parsed_data = JSON.parse(data)
   null_alias  = parsed_data["objects"][0]["alias"].downcase.gsub(" ", "")
   parsed_data["objects"][0]["nodes"].each_with_index do |node, index|
