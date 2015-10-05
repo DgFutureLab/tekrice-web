@@ -296,8 +296,10 @@ def get_data_for_site(site)
     if all_data_call.code == "200"
       # Clean up data for null values, misordered keys, etc.
       @all_data = cleanup_sitedata(JSON.parse(all_data_call.body))
+      #@all_data = JSON.parse(all_data_call.body)
 
-      File.open(cache_file, "w"){ |f| f << @all_data }
+      File.open(cache_file, "w"){ |f| f << @all_data.to_json }
+      @all_data = File.read(cache_file)
     else
       if File.exist?(cache_file)
         @all_data = File.read(cache_file)
